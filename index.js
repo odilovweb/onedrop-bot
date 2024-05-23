@@ -7,8 +7,10 @@ const channel = "2018020256";
 const zayavka = "1882547088";
 let canWithdraw = true;
 const users = [
-  { id: admin, referrals: 100, balance: 10, friends: [] },
-  { id: 7026932649, referrals: 100, balance: 10, friends: [] },
+  { id: 841886966, referrals: 1, balance: 0.1 },
+  { id: 7026932649, referrals: 100, balance: 10 },
+  { id: 6791034718, referrals: 0, balance: 0 },
+  { id: 5095477136, referrals: 0, balance: 0 },
 ];
 
 const isMemberFunc = async (ctx) => {
