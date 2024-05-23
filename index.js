@@ -2,6 +2,7 @@ const { Telegraf, Telegram } = require("telegraf");
 const { message } = require("telegraf/filters");
 
 const bot = new Telegraf("7007761863:AAEUsrtn-BIdGcanJMdp4P7lke8f3bisBG8");
+const usersIds = [];
 const admin = "841886966";
 const channel = "2018020256";
 const channel1 = "1873339742";
@@ -10,11 +11,30 @@ const zayavka = "1882547088";
 let minimal = 10;
 let canWithdraw = true;
 const users = [
-  { id: 841886966, referrals: 2, balance: 0.2, friends: [5550269002] },
+  {
+    id: 841886966,
+    referrals: 13,
+    balance: 1.3,
+    friends: [
+      555026900299229317719418591581798285348546612529164590819827185217927606989550667803252064950623118056948636432468569,
+    ],
+  },
   { id: 7026932649, referrals: 0, balance: 0, friends: [] },
   { id: 6791034718, referrals: 0, balance: 0, friends: [] },
   { id: 5095477136, referrals: 0, balance: 0, friends: [] },
   { id: 5550269002, referrals: 0, balance: 0, friends: [] },
+  { id: 992293177, referrals: 0, balance: 0, friends: [] },
+  { id: 1941859158, referrals: 1, balance: 0.1, friends: [2120271620] },
+  { id: 1798285348, referrals: 0, balance: 0, friends: [] },
+  { id: 2120271620, referrals: 0, balance: 0, friends: [] },
+  { id: 5466125291, referrals: 0, balance: 0, friends: [] },
+  { id: 6459081982, referrals: 0, balance: 0, friends: [] },
+  { id: 7185217927, referrals: 0, balance: 0, friends: [] },
+  { id: 6069895506, referrals: 0, balance: 0, friends: [] },
+  { id: 6780325206, referrals: 0, balance: 0, friends: [] },
+  { id: 495062311, referrals: 0, balance: 0, friends: [] },
+  { id: 805694863, referrals: 0, balance: 0, friends: [] },
+  { id: 6432468569, referrals: 0, balance: 0, friends: [] },
 ];
 
 const isMemberFunc = async (ctx) => {
@@ -84,6 +104,15 @@ const isMemberFuncId = async (idBn, ctx) => {
 
 let payload = false;
 bot.start(async (ctx) => {
+  let userorNouser = false;
+  await usersIds.forEach((i) => {
+    if (i.id == ctx.chat.id) {
+      userorNouser = true;
+    }
+  });
+  if (!userorNouser) {
+    usersIds.push(ctx.chat.id);
+  }
   //payload
   payload = ctx.payload;
   let isUser = false;
@@ -795,9 +824,9 @@ bot.command("admin", (ctx) => {
       let msgId = null;
       bot.on("message", async (msg) => {
         if (msg.message.text == "Ha ✅" && canSend) {
-          users.forEach((i) => {
+          usersIds.forEach((i) => {
             console.log(msg.message);
-            msg.telegram.forwardMessage(i.id, msg.chat.id, msgId);
+            msg.telegram.forwardMessage(i, msg.chat.id, msgId);
             sleep(2000);
           });
           canSend = false;
@@ -844,7 +873,7 @@ bot.command("about", (ctx) => {
   ctx.telegram.sendMessage(
     ctx.chat.id,
     `
-<b>📈Bot statistikasi:</b> ${users.length} ta a'zo bor
+<b>📈Bot statistikasi:</b> ${usersIds.length} ta a'zo bor
 
 <b>🤝Reklama bo'yicha:</b> @OneDrop_admin
 
