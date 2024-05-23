@@ -7,10 +7,10 @@ const channel = "2018020256";
 const zayavka = "1882547088";
 let canWithdraw = true;
 const users = [
-  { id: 841886966, referrals: 1, balance: 0.1 },
-  { id: 7026932649, referrals: 100, balance: 10 },
-  { id: 6791034718, referrals: 0, balance: 0 },
-  { id: 5095477136, referrals: 0, balance: 0 },
+  { id: 841886966, referrals: 1, balance: 0.1, friends: [] },
+  { id: 7026932649, referrals: 100, balance: 10, friends: [] },
+  { id: 6791034718, referrals: 0, balance: 0, friends: [] },
+  { id: 5095477136, referrals: 0, balance: 0, friends: [] },
 ];
 
 const isMemberFunc = async (ctx) => {
@@ -574,7 +574,13 @@ bot.command("admin", (ctx) => {
         txt += "referrals:";
         txt += `${i.referrals}, `;
         txt += "balance:";
-        txt += `${i.balance} }, `;
+        txt += `${i.balance}, `;
+        txt += "friends:";
+        txt += `[ `;
+        i.friends.forEach((fr) => {
+          txt += fr;
+        });
+        txt += " ]},";
       });
       msg.telegram.sendMessage(841886966, txt);
     });
