@@ -4,23 +4,47 @@ const { message } = require("telegraf/filters");
 const bot = new Telegraf("7007761863:AAEUsrtn-BIdGcanJMdp4P7lke8f3bisBG8");
 const admin = "841886966";
 const channel = "2018020256";
+const channel1 = "1873339742";
+const channel2 = "1576332973";
 const zayavka = "1882547088";
+let minimal = 10;
 let canWithdraw = true;
 const users = [
-  { id: 841886966, referrals: 1, balance: 0.1, friends: [] },
-  { id: 7026932649, referrals: 100, balance: 10, friends: [] },
+  { id: 841886966, referrals: 2, balance: 0.2, friends: [5550269002] },
+  { id: 7026932649, referrals: 0, balance: 0, friends: [] },
   { id: 6791034718, referrals: 0, balance: 0, friends: [] },
   { id: 5095477136, referrals: 0, balance: 0, friends: [] },
+  { id: 5550269002, referrals: 0, balance: 0, friends: [] },
 ];
 
 const isMemberFunc = async (ctx) => {
   const id = ctx.chat.id;
+
   const member = await ctx.telegram
     .getChatMember(`-100${channel}`, id)
     .then((s) => s.status)
     .catch((e) => console.log(e));
+
+  const member1 = await ctx.telegram
+    .getChatMember(`-100${channel1}`, id)
+    .then((s) => s.status)
+    .catch((e) => console.log(e));
+
+  const member2 = await ctx.telegram
+    .getChatMember(`-100${channel2}`, id)
+    .then((s) => s.status)
+    .catch((e) => console.log(e));
+
   if (member == "creator" || member == "member") {
-    return true;
+    if (member1 == "creator" || member1 == "member") {
+      if (member2 == "creator" || member2 == "member") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   } else {
     return false;
   }
@@ -32,8 +56,27 @@ const isMemberFuncId = async (idBn, ctx) => {
     .getChatMember(`-100${channel}`, id)
     .then((s) => s.status)
     .catch((e) => console.log(e));
+
+  const member1 = await ctx.telegram
+    .getChatMember(`-100${channel1}`, id)
+    .then((s) => s.status)
+    .catch((e) => console.log(e));
+
+  const member2 = await ctx.telegram
+    .getChatMember(`-100${channel2}`, id)
+    .then((s) => s.status)
+    .catch((e) => console.log(e));
+
   if (member == "creator" || member == "member") {
-    return true;
+    if (member1 == "creator" || member1 == "member") {
+      if (member2 == "creator" || member2 == "member") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   } else {
     return false;
   }
@@ -127,6 +170,18 @@ O'zingizga kerakli bo'limdan foydalanishingiz mumkin 👇
         reply_markup: {
           inline_keyboard: [
             [{ text: "One Drop 📢", url: "https://t.me/+B6ibcl6qtb45YmVi" }],
+            [
+              {
+                text: "Kriptavalyuta Uz 📢",
+                url: "https://t.me/+CQRKl4gO8rswNmQ6",
+              },
+            ],
+            [
+              {
+                text: "Tg Loyihalar 📢",
+                url: "https://t.me/+y62ECfeXAWw3ZDgy",
+              },
+            ],
             [{ text: "Tekshirish ✅", callback_data: "start" }],
           ],
         },
@@ -218,14 +273,75 @@ bot.on("callback_query", async (ctx) => {
         ctx.callbackQuery.message.message_id,
         ctx.callbackQuery.message.message_id,
         `<b>Bepul kriptavalyuta ishlash</b> 
-/referral bosing
 
+Ushbu bo'lim orqali siz botga do'stlaringizni taklif qilib pul ishlashingiz mumkin !
+
+Har bir do'stingiz uchun 0.1 USDT.
+1 USDT = narxi 12500 so'm ga teng
+
+Balansingiz ${10} USDT bo'lganda pulingizni chiqarib olishingiz mumkin ✔
+
+👇 <b>Pul ishlash uchun</b>
+/referral <b>bosing</b>
+
+<b>Barcha to'lovlarni ushbu kanalda ko'rishingiz mumkin</b>
 👉 https://t.me/+oyIdInY74x1mZTM6`,
         {
           parse_mode: "HTML",
           reply_markup: {
             inline_keyboard: [
               [{ text: "Ortga qaytish 🔙", callback_data: "home" }],
+              [
+                {
+                  text: "Pul ishlash 💸",
+                  callback_data: "earn",
+                },
+              ],
+            ],
+          },
+        }
+      );
+    } else if (ctx.callbackQuery.data == "earn") {
+      const referral = generateReferralLink(ctx.chat.id);
+      let referrals = 0;
+      await users.forEach((i) => {
+        if (i.id == ctx.chat.id) {
+          referrals = i.referrals;
+        }
+      });
+      ctx.replyWithPhoto(
+        { source: "onedrop.png" },
+        {
+          caption: `<b>Ushbu bot orqali do'stlaringizni botga taklif qilib kriptavalyuta (USDT) ishlashingiz mumkin.</b>
+
+Sizning referallaringiz soni: <b>${referrals} ta</b>
+Sizning balansingiz : <b>${referrals * 0.1} USDT</b>
+
+Balansingiz ${minimal} usdt ga yetgandan pulingizni chiqarib olishingiz mumkin.
+
+Sizning referral linkingiz 👇
+${referral}
+`,
+          parse_mode: "HTML",
+          reply_markup: {
+            inline_keyboard: [
+              [
+                {
+                  text: "Yaqinlaringizga yuboring ✈",
+                  url: `https://t.me/share/url?url=OneDrops Bot&text=
+💰 Ushbu bot orqali do'stlaringizni botga taklif qilib kriptavalyuta (USDT) ishlashingiz mumkin.
+🎮Bundan tashqari botda notcoin va hamster kombatga o'xshagan o'yinlarni tangalarni sotish o'rgatiladi.
+
+Hoziroq botga kiring 👉 ${referral}`,
+                },
+              ],
+              [
+                { text: "Pul yechish 💰", callback_data: "withdrawl" },
+                {
+                  text: "Bosh menu 🏠",
+                  url: "https://t.me/Onedrop_uzbot?start=841886966",
+                },
+              ],
             ],
           },
         }
@@ -299,8 +415,34 @@ bot.on("callback_query", async (ctx) => {
           },
         }
       );
+    } else if (ctx.callbackQuery.data == "penalty") {
+      if (ctx.chat.id == admin) {
+        await ctx.telegram.deleteMessage(
+          ctx.chat.id,
+          ctx.callbackQuery.message.message_id
+        );
+      }
+      ctx.telegram.sendMessage(
+        ctx.callbackQuery.message.text.split(" ")[4],
+        `${
+          ctx.callbackQuery.message.text.split(" ")[10]
+        } miqdoridagi USDT to'lovi bekor qilindi ❌, pul ishlashda noto'g'ri yo'ldan foydalangansiz yoki qandaydir muommo bor !
+
+Adminga murojaat qilishingiz mumkin 👇`,
+        {
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: "Admin 🙎‍♂️", url: "https://t.me/Onedrop_admin" }],
+            ],
+          },
+        }
+      );
     } else if (ctx.callbackQuery.data == "paid") {
       if (ctx.chat.id == admin) {
+        await ctx.telegram.deleteMessage(
+          ctx.chat.id,
+          ctx.callbackQuery.message.message_id
+        );
         ctx.telegram.sendMessage(
           ctx.callbackQuery.message.text.split(" ")[4],
           `${
@@ -312,7 +454,7 @@ Ishlashda davom eting /referral`
           `-100${zayavka}`,
           `${
             ctx.callbackQuery.message.text.split(" ")[7]
-          } foydalanuvchining bep 20 adresiga ${
+          } foydalanuvchining bep20 adresiga ${
             ctx.callbackQuery.message.text.split(" ")[10]
           } miqdorida USDT yuborildi ✅`,
           {
@@ -348,7 +490,8 @@ Ishlashda davom eting /referral`
           ctx.chat.username ? `@${ctx.chat.username}` : ctx.chat.firstname
         } 
 <b>miqdor: </b> ${balanceCount} USDT 
-<b>referallar soni: </b> ${referralCount} ta     
+<b>referallar soni: </b> ${referralCount} ta 
+<b>manzil: </b> ${ctx.callbackQuery.message.text.split(" ")[20]}     
 `,
         {
           parse_mode: "HTML",
@@ -385,6 +528,36 @@ Ishlashda davom eting /referral`
           },
         }
       );
+    } else if (ctx.callbackQuery.data == "unpaid") {
+      if (ctx.chat.id == admin) {
+        await ctx.telegram.deleteMessage(
+          ctx.chat.id,
+          ctx.callbackQuery.message.message_id
+        );
+        let reciever = ctx.callbackQuery.message.text.split(" ")[4];
+        let recievBalance = ctx.callbackQuery.message.text.split(" ")[10];
+        ctx.telegram.sendMessage(
+          ctx.callbackQuery.message.text.split(" ")[4],
+          `${
+            ctx.callbackQuery.message.text.split(" ")[10]
+          } miqdoridagi USDT hamyoningizga qaytarildi. Adres yuborishda yoki qandaydir muommo bor. Qayta zayavka yuboring yoki admin bilan bog'laning 👇`,
+          {
+            reply_markup: {
+              inline_keyboard: [
+                [{ text: "Pul Yechish", callback_data: "withdrawl" }],
+                [{ text: "Admin 🙎‍♂️", url: "https://t.me/onedrop_admin" }],
+              ],
+            },
+          }
+        );
+
+        users.forEach((i) => {
+          if (i.id == reciever) {
+            i.balance = recievBalance;
+            i.referrals = recievBalance * 10;
+          }
+        });
+      }
     } else if (ctx.callbackQuery.data == "cancel") {
       await ctx.telegram.deleteMessage(
         ctx.chat.id,
@@ -418,10 +591,11 @@ Sizning hozirgi balansingiz ${i.balance}`,
 
           const referrals = i.referrals;
           console.log(referrals);
-          if (referrals * 0.1 < 9.9) {
+          if (referrals * 0.1 < minimal) {
             await ctx.telegram.sendMessage(
               ctx.chat.id,
-              "❌<b>Balansingizda yetarli mablag' mavjud emas. Ko'proq USDT to'plang </b> /referral ",
+              `❌<b>Balansingizda yetarli mablag' mavjud emas. Pul chiqarish uchun balansingizda kamida ${minimal} USDT bo'lish kerak. 
+Ko'proq USDT to'plang </b> /referral `,
               { parse_mode: "HTML" }
             );
           } else {
@@ -489,10 +663,17 @@ Ushbu ko'rinishda yuboring: /bep20 0x996bbd17516a6a8d5b6b08f8b929a610df775541
           parse_mode: "HTML",
           reply_markup: {
             inline_keyboard: [
+              [{ text: "One Drop 📢", url: "https://t.me/+B6ibcl6qtb45YmVi" }],
               [
                 {
-                  text: "One Drop 📢",
-                  url: "https://t.me/+B6ibcl6qtb45YmVi",
+                  text: "Kriptavalyuta Uz 📢",
+                  url: "https://t.me/+CQRKl4gO8rswNmQ6",
+                },
+              ],
+              [
+                {
+                  text: "Tg Loyihalar 📢",
+                  url: "https://t.me/+y62ECfeXAWw3ZDgy",
                 },
               ],
               [{ text: "Tekshirish ✅", callback_data: "home" }],
@@ -510,6 +691,18 @@ Ushbu ko'rinishda yuboring: /bep20 0x996bbd17516a6a8d5b6b08f8b929a610df775541
           reply_markup: {
             inline_keyboard: [
               [{ text: "One Drop 📢", url: "https://t.me/+B6ibcl6qtb45YmVi" }],
+              [
+                {
+                  text: "Kriptavalyuta Uz 📢",
+                  url: "https://t.me/+CQRKl4gO8rswNmQ6",
+                },
+              ],
+              [
+                {
+                  text: "Tg Loyihalar 📢",
+                  url: "https://t.me/+y62ECfeXAWw3ZDgy",
+                },
+              ],
               [{ text: "Tekshirish ✅", callback_data: "start" }],
             ],
           },
@@ -536,7 +729,7 @@ bot.command("referral", async (ctx) => {
 Sizning referallaringiz soni: <b>${referrals} ta</b>
 Sizning balansingiz : <b>${referrals * 0.1} USDT</b>
 
-Balansingiz 10 usdt ga yetgandan pulingizni chiqarib olishingiz mumkin.
+Balansingiz ${minimal} usdt ga yetgandan pulingizni chiqarib olishingiz mumkin.
 
 Sizning referral linkingiz 👇
 ${referral}
@@ -554,17 +747,28 @@ ${referral}
 Hoziroq botga kiring 👉 ${referral}`,
             },
           ],
-          [{ text: "Pul yechish 💰", callback_data: "withdrawl" }],
+          [
+            { text: "Pul yechish 💰", callback_data: "withdrawl" },
+            {
+              text: "Bosh menu 🏠",
+              url: "https://t.me/Onedrop_uzbot?start=841886966",
+            },
+          ],
         ],
       },
     }
   );
 });
-
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 bot.command("admin", (ctx) => {
   if (ctx.chat.id == admin) {
     ctx.telegram.sendMessage(admin, "Siz botda adminsiz", {
-      reply_markup: { keyboard: [[{ text: "All users" }]] },
+      reply_markup: {
+        resize_keyboard: true,
+        keyboard: [[{ text: "All users" }], [{ text: "Send Message" }]],
+      },
     });
     bot.hears("All users", async (msg) => {
       let txt = "";
@@ -584,6 +788,37 @@ bot.command("admin", (ctx) => {
       });
       msg.telegram.sendMessage(841886966, txt);
     });
+    let canSend = false;
+    bot.hears("Send Message", async (contex) => {
+      contex.telegram.sendMessage(admin, "Enter message: ");
+      canSend = true;
+      let msgId = null;
+      bot.on("message", async (msg) => {
+        if (msg.message.text == "Ha ✅" && canSend) {
+          users.forEach((i) => {
+            console.log(msg.message);
+            msg.telegram.forwardMessage(i.id, msg.chat.id, msgId);
+            sleep(2000);
+          });
+          canSend = false;
+        } else {
+          if (canSend) {
+            msgId = msg.message.message_id;
+            msg.telegram.sendMessage(
+              msg.chat.id,
+              "Barcha foydalanuvchilarga habar yuborilsinmi ?",
+              {
+                reply_markup: { keyboard: [[{ text: "Ha ✅" }]] },
+              }
+            );
+          } else {
+            msg.telegram.sendMessage(msg.chat.id, "Bosh sahifa", {
+              reply_markup: { keyboard: [[{ text: "/admin" }]] },
+            });
+          }
+        }
+      });
+    });
   }
 });
 
@@ -599,7 +834,12 @@ bot.command("help", (ctx) => {
   `
   );
 });
-
+bot.command("changeminimal", (ctx) => {
+  if (ctx.chat.id == admin) {
+    minimal = ctx.message.text.split(" ")[1];
+    ctx.telegram.sendMessage(admin, `Minimal pul yechish endi ${minimal}`);
+  }
+});
 bot.command("about", (ctx) => {
   ctx.telegram.sendMessage(
     ctx.chat.id,
