@@ -2,7 +2,40 @@ const { Telegraf, Telegram } = require("telegraf");
 const { message } = require("telegraf/filters");
 
 const bot = new Telegraf("7007761863:AAEUsrtn-BIdGcanJMdp4P7lke8f3bisBG8");
-const usersIds = [];
+const usersIds = [
+  5589656723, 5850078602, 841886966, 7026932649, 6367866435, 1246284570,
+  5325327728, 6345907681, 6345907681, 6345907681, 6359956264, 5467128150,
+  5333793030, 5467128150, 5333793030, 6359956264, 6210633519, 6879626623,
+  5333793030, 5333793030, 6754698931, 5078928793, 1525537978, 6501150300,
+  6501150300, 5879320290, 841886966, 5879320290, 6920204255, 5124879583,
+  5142312438, 6525800286, 5517308296, 6046569771, 5517308296, 5713474819,
+  5124879583, 5517308296, 5517308296, 5910929593, 7050610790, 5977867112,
+  1365863023, 6400959582, 1155098067, 817496601, 844071645, 6300303346,
+  6776644833, 1531672517, 5950572394, 5950572394, 1915745263, 522183608,
+  6736705743, 6462048726, 6736705743, 2018850986, 240229643, 2070688506,
+  5385426718, 866260732, 1941257766, 6074836256, 5605983528, 423532035,
+  6499392493, 5836483745, 5826843733, 5836483745, 5836483745, 5836483745,
+  5836483745, 5309589198, 6282160113, 5309589198, 747070981, 743134625,
+  6535199073, 5244048733, 530203322, 7129665254, 6387858106, 7129665254,
+  6089644216, 6131769205, 6131769205, 6725053461, 5792761090, 6462832618,
+  926729683, 6725053461, 926729683, 7178665032, 6793866440, 6793866440,
+  530203322, 6216527011, 494663382, 6519734528, 717884835, 717884835,
+  1102502519, 6355078731, 5584015653, 5753439271, 7048820668, 5885888344,
+  5626136679, 6879180339, 963215782, 963215782, 6785595901, 6838248919,
+  6536819193, 6051344739, 6654484582, 1089148097, 6931023357, 6799104709,
+  741652131, 6931023357, 6931023357, 6355078731, 6355078731, 7177882535,
+  7177882535, 6931023357, 7177882535, 6931023357, 6931023357, 6931023357,
+  6945600977, 7095625844, 6945600977, 1786351405, 6945600977, 6364417776,
+  1948319280, 6973390662, 6973390662, 584514620, 6973390662, 1147568169,
+  6963753928, 6963753928, 5907324504, 5907324504, 6973390662, 5429917465,
+  6096931125, 6145006961, 6364417776, 6096931125, 6916643707, 5576928180,
+  5576928180, 6794795257, 896853845, 6916643707, 6676259165, 630036403,
+  1292881201, 6651593015, 5137344768, 6317306695, 5407259794, 662227688,
+  1135762875, 5754994212, 6431961429, 5154330601, 5242676037, 6423300646,
+  5947428003, 6096931125, 6096931125, 5947428003, 6982465319, 6028450543,
+  6431961429, 292455282, 5847755217, 5935720511, 6839420869, 6317306695,
+  5149940546, 6878149294, 1120961942, 1120961942, 1120961942, 1120961942,
+];
 const admin = "841886966";
 
 const channel = "2018020256";
@@ -286,107 +319,146 @@ bot.on("callback_query", async (ctx) => {
 
   if (isMember) {
     if (ctx.callbackQuery.data == "home") {
-      ctx.telegram.editMessageText(
-        ctx.chat.id,
-        ctx.callbackQuery.message.message_id,
-        ctx.callbackQuery.message.message_id,
+      if (
+        ctx.callbackQuery.message.text !==
         `Hurmatli <b>${ctx.chat.first_name}</b> , botimizdan bemalol foydalanishingiz mumkin !
+     O'zingizga kerakli bo'limni tanlang 👇
+         `
+      ) {
+        ctx.telegram.editMessageText(
+          ctx.chat.id,
+          ctx.callbackQuery.message.message_id,
+          ctx.callbackQuery.message.message_id,
+          `Hurmatli <b>${ctx.chat.first_name}</b> , botimizdan bemalol foydalanishingiz mumkin !
       O'zingizga kerakli bo'limni tanlang 👇
           `,
-        {
-          parse_mode: "HTML",
-          reply_markup: {
-            inline_keyboard: [
-              [
-                {
-                  text: "Hamster Kombat sotish 💰",
-                  callback_data: "hamster-sell",
-                },
+          {
+            parse_mode: "HTML",
+            reply_markup: {
+              inline_keyboard: [
+                [
+                  {
+                    text: "Hamster Kombat sotish 💰",
+                    callback_data: "hamster-sell",
+                  },
+                ],
+                [
+                  {
+                    text: "Notcoin sotish 💰",
+                    callback_data: "notcoin-sell",
+                  },
+                ],
+                [
+                  {
+                    text: "Pul sarflamasdan crypto ishlash 💲",
+                    callback_data: "video-dars",
+                  },
+                ],
               ],
-              [
-                {
-                  text: "Notcoin sotish 💰",
-                  callback_data: "notcoin-sell",
-                },
-              ],
-              [
-                {
-                  text: "Pul sarflamasdan crypto ishlash 💲",
-                  callback_data: "video-dars",
-                },
-              ],
-            ],
-          },
-        }
-      );
+            },
+          }
+        );
+      }
     } else if (ctx.callbackQuery.data == "notcoin-sell") {
-      ctx.telegram.editMessageText(
-        ctx.chat.id,
-        ctx.callbackQuery.message.message_id,
-        ctx.callbackQuery.message.message_id,
+      if (
+        ctx.callbackQuery.message.text !==
         `<b>Notcoin sotish uchun ushbu kanalga a'zo bo'lishingiz kerak 👇</b> 
 
-👉 https://t.me/+AFmf0OKkk_k5ODVi`,
-        {
-          parse_mode: "HTML",
-          reply_markup: {
-            inline_keyboard: [
-              [{ text: "Ortga qaytish 🔙", callback_data: "home" }],
-            ],
-          },
-        }
-      );
+      👉 https://t.me/+AFmf0OKkk_k5ODVi`
+      ) {
+        ctx.telegram.editMessageText(
+          ctx.chat.id,
+          ctx.callbackQuery.message.message_id,
+          ctx.callbackQuery.message.message_id,
+          `<b>Notcoin sotish uchun ushbu kanalga a'zo bo'lishingiz kerak 👇</b> 
+  
+  👉 https://t.me/+AFmf0OKkk_k5ODVi`,
+          {
+            parse_mode: "HTML",
+            reply_markup: {
+              inline_keyboard: [
+                [{ text: "Ortga qaytish 🔙", callback_data: "home" }],
+              ],
+            },
+          }
+        );
+      }
     } else if (ctx.callbackQuery.data == "hamster-sell") {
-      ctx.telegram.editMessageText(
-        ctx.chat.id,
-        ctx.callbackQuery.message.message_id,
-        ctx.callbackQuery.message.message_id,
+      if (
+        ctx.callbackQuery.message.text !==
         `<b>Hamster Kombat sotish uchun ushbu kanalga a'zo bo'lishingiz kerak 👇</b> 
 
-👉 https://t.me/+ACMH1IaKGek0M2Vi`,
-        {
-          parse_mode: "HTML",
-          reply_markup: {
-            inline_keyboard: [
-              [{ text: "Ortga qaytish 🔙", callback_data: "home" }],
-            ],
-          },
-        }
-      );
+      👉 https://t.me/+ACMH1IaKGek0M2Vi`
+      ) {
+        ctx.telegram.editMessageText(
+          ctx.chat.id,
+          ctx.callbackQuery.message.message_id,
+          ctx.callbackQuery.message.message_id,
+          `<b>Hamster Kombat sotish uchun ushbu kanalga a'zo bo'lishingiz kerak 👇</b> 
+  
+  👉 https://t.me/+ACMH1IaKGek0M2Vi`,
+          {
+            parse_mode: "HTML",
+            reply_markup: {
+              inline_keyboard: [
+                [{ text: "Ortga qaytish 🔙", callback_data: "home" }],
+              ],
+            },
+          }
+        );
+      }
     } else if (ctx.callbackQuery.data == "video-dars") {
-      ctx.telegram.editMessageText(
-        ctx.chat.id,
-        ctx.callbackQuery.message.message_id,
-        ctx.callbackQuery.message.message_id,
+      if (
+        ctx.callbackQuery.message.text !==
         `<b>Bepul kriptavalyuta ishlash</b> 
 
-Ushbu bo'lim orqali siz botga do'stlaringizni taklif qilib pul ishlashingiz mumkin !
-
-Har bir do'stingiz uchun 0.1 USDT.
-1 USDT = narxi 12500 so'm ga teng
-
-Balansingiz ${10} USDT bo'lganda pulingizni chiqarib olishingiz mumkin ✔
-
-👇 <b>Pul ishlash uchun</b>
-/referral <b>bosing</b>
-
-<b>Barcha to'lovlarni ushbu kanalda ko'rishingiz mumkin</b>
-👉 https://t.me/+asFl1zjr5zQxMjUy`,
-        {
-          parse_mode: "HTML",
-          reply_markup: {
-            inline_keyboard: [
-              [{ text: "Ortga qaytish 🔙", callback_data: "home" }],
-              [
-                {
-                  text: "Pul ishlash 💸",
-                  callback_data: "earn",
-                },
+      Ushbu bo'lim orqali siz botga do'stlaringizni taklif qilib pul ishlashingiz mumkin !
+      
+      Har bir do'stingiz uchun 0.1 USDT.
+      1 USDT = narxi 12500 so'm ga teng
+      
+      Balansingiz ${minimal} USDT bo'lganda pulingizni chiqarib olishingiz mumkin ✔
+      
+      👇 <b>Pul ishlash uchun</b>
+      /referral <b>bosing</b>
+      
+      <b>Barcha to'lovlarni ushbu kanalda ko'rishingiz mumkin</b>
+      👉 https://t.me/+asFl1zjr5zQxMjUy`
+      ) {
+        ctx.telegram.editMessageText(
+          ctx.chat.id,
+          ctx.callbackQuery.message.message_id,
+          ctx.callbackQuery.message.message_id,
+          `<b>Bepul kriptavalyuta ishlash</b> 
+  
+  Ushbu bo'lim orqali siz botga do'stlaringizni taklif qilib pul ishlashingiz mumkin !
+  
+  Har bir do'stingiz uchun 0.1 USDT.
+  1 USDT = narxi 12500 so'm ga teng
+  
+  Balansingiz ${minimal} USDT bo'lganda pulingizni chiqarib olishingiz mumkin ✔
+  
+  👇 <b>Pul ishlash uchun</b>
+  /referral <b>bosing</b>
+  
+  <b>Barcha to'lovlarni ushbu kanalda ko'rishingiz mumkin</b>
+  👉 https://t.me/+asFl1zjr5zQxMjUy`,
+          {
+            parse_mode: "HTML",
+            reply_markup: {
+              inline_keyboard: [
+                [{ text: "Ortga qaytish 🔙", callback_data: "home" }],
+                [
+                  {
+                    text: "Pul ishlash 💸",
+                    callback_data: "earn",
+                  },
+                ],
               ],
-            ],
-          },
-        }
-      );
+            },
+          }
+        );
+      }
     } else if (ctx.callbackQuery.data == "earn") {
       const referral = generateReferralLink(ctx.chat.id);
       let referrals = 0;
@@ -468,39 +540,46 @@ Hoziroq botga kiring 👉 ${referral}`,
       }
 
       //referral end
-      ctx.telegram.editMessageText(
-        ctx.chat.id,
-        ctx.callbackQuery.message.message_id,
-        ctx.callbackQuery.message.message_id,
+      if (
+        ctx.callbackQuery.message.text !==
         `Hurmatli <b>${ctx.chat.first_name}</b> , botimizga hush kelibsiz !
-        O'zingizga kerakli bo'limdan foydalanishingiz mumkin 👇
-            `,
-        {
-          parse_mode: "HTML",
-          reply_markup: {
-            inline_keyboard: [
-              [
-                {
-                  text: "Hamster Kombat sotish 💰",
-                  callback_data: "hamster-sell",
-                },
+      O'zingizga kerakli bo'limdan foydalanishingiz mumkin 👇
+          `
+      ) {
+        ctx.telegram.editMessageText(
+          ctx.chat.id,
+          ctx.callbackQuery.message.message_id,
+          ctx.callbackQuery.message.message_id,
+          `Hurmatli <b>${ctx.chat.first_name}</b> , botimizga hush kelibsiz !
+              O'zingizga kerakli bo'limdan foydalanishingiz mumkin 👇
+                  `,
+          {
+            parse_mode: "HTML",
+            reply_markup: {
+              inline_keyboard: [
+                [
+                  {
+                    text: "Hamster Kombat sotish 💰",
+                    callback_data: "hamster-sell",
+                  },
+                ],
+                [
+                  {
+                    text: "Notcoin sotish 💰",
+                    callback_data: "notcoin-sell",
+                  },
+                ],
+                [
+                  {
+                    text: "Pul sarflamasdan crypto ishlash 💲",
+                    callback_data: "video-dars",
+                  },
+                ],
               ],
-              [
-                {
-                  text: "Notcoin sotish 💰",
-                  callback_data: "notcoin-sell",
-                },
-              ],
-              [
-                {
-                  text: "Pul sarflamasdan crypto ishlash 💲",
-                  callback_data: "video-dars",
-                },
-              ],
-            ],
-          },
-        }
-      );
+            },
+          }
+        );
+      }
     } else if (ctx.callbackQuery.data == "penalty") {
       if (ctx.chat.id == admin) {
         await ctx.telegram.deleteMessage(
@@ -596,24 +675,29 @@ Ishlashda davom eting /referral`
           i.referrals = 0;
         }
       });
-      ctx.telegram.editMessageText(
-        ctx.chat.id,
-        ctx.callbackQuery.message.message_id,
-        ctx.callbackQuery.message.message_id,
-        "Zayavkangiz muvaffaqiyatli adminga yuborildi. 24 soat ichida to'lov yuborilmasa adminga murojaat qiling. Admin: @m_odlov",
-        {
-          reply_markup: {
-            inline_keyboard: [
-              [
-                {
-                  text: "Bosh menu 🏠",
-                  url: "https://t.me/Onedrop_uzbot?start=841886966",
-                },
+      if (
+        ctx.callbackQuery.message.text !==
+        "Zayavkangiz muvaffaqiyatli adminga yuborildi. 24 soat ichida to'lov yuborilmasa adminga murojaat qiling. Admin: @m_odlov"
+      ) {
+        ctx.telegram.editMessageText(
+          ctx.chat.id,
+          ctx.callbackQuery.message.message_id,
+          ctx.callbackQuery.message.message_id,
+          "Zayavkangiz muvaffaqiyatli adminga yuborildi. 24 soat ichida to'lov yuborilmasa adminga murojaat qiling. Admin: @m_odlov",
+          {
+            reply_markup: {
+              inline_keyboard: [
+                [
+                  {
+                    text: "Bosh menu 🏠",
+                    url: "https://t.me/Onedrop_uzbot?start=841886966",
+                  },
+                ],
               ],
-            ],
-          },
-        }
-      );
+            },
+          }
+        );
+      }
     } else if (ctx.callbackQuery.data == "unpaid") {
       if (ctx.chat.id == admin) {
         await ctx.telegram.deleteMessage(
@@ -739,34 +823,45 @@ Ushbu ko'rinishda yuboring: /bep20 0x996bbd17516a6a8d5b6b08f8b929a610df775541
       ctx.callbackQuery.data !== "start" &&
       ctx.callbackQuery.data !== "withdrawl"
     ) {
-      ctx.telegram.editMessageText(
-        ctx.chat.id,
-        ctx.callbackQuery.message.message_id,
-        ctx.callbackQuery.message.message_id,
+      if (
+        ctx.callbackQuery.message.text !==
         `Hurmatli <b>${ctx.chat.first_name}</b> , quyidagi kanalga obuna bo'lganingizdan so'ng botdan to'liq foydalanishingiz mumkin 👇
-                      `,
-        {
-          parse_mode: "HTML",
-          reply_markup: {
-            inline_keyboard: [
-              [{ text: "One Drop 📢", url: "https://t.me/+B6ibcl6qtb45YmVi" }],
-              [
-                {
-                  text: "Kriptavalyuta Uz 📢",
-                  url: "https://t.me/+CQRKl4gO8rswNmQ6",
-                },
+      `
+      ) {
+        ctx.telegram.editMessageText(
+          ctx.chat.id,
+          ctx.callbackQuery.message.message_id,
+          ctx.callbackQuery.message.message_id,
+          `Hurmatli <b>${ctx.chat.first_name}</b> , quyidagi kanalga obuna bo'lganingizdan so'ng botdan to'liq foydalanishingiz mumkin 👇
+                        `,
+          {
+            parse_mode: "HTML",
+            reply_markup: {
+              inline_keyboard: [
+                [
+                  {
+                    text: "One Drop 📢",
+                    url: "https://t.me/+B6ibcl6qtb45YmVi",
+                  },
+                ],
+                [
+                  {
+                    text: "Kriptavalyuta Uz 📢",
+                    url: "https://t.me/+CQRKl4gO8rswNmQ6",
+                  },
+                ],
+                [
+                  {
+                    text: "Tg Loyihalar 📢",
+                    url: "https://t.me/+y62ECfeXAWw3ZDgy",
+                  },
+                ],
+                [{ text: "Tekshirish ✅", callback_data: "home" }],
               ],
-              [
-                {
-                  text: "Tg Loyihalar 📢",
-                  url: "https://t.me/+y62ECfeXAWw3ZDgy",
-                },
-              ],
-              [{ text: "Tekshirish ✅", callback_data: "home" }],
-            ],
-          },
-        }
-      );
+            },
+          }
+        );
+      }
     } else {
       ctx.telegram.sendMessage(
         id,
