@@ -323,16 +323,13 @@ bot.on("callback_query", async (ctx) => {
   sleep(2500);
   if (isMember) {
     if (ctx.callbackQuery.data == "home") {
-      if (
-        ctx.callbackQuery.message.text !==
-        `Hurmatli <b>${ctx.chat.first_name}</b> , botimizdan bemalol foydalanishingiz mumkin !
-     O'zingizga kerakli bo'limni tanlang 👇
-         `
-      ) {
-        await ctx.telegram.editMessageText(
+      {
+        await ctx.telegram.deleteMessage(
           ctx.chat.id,
-          ctx.callbackQuery.message.message_id,
-          ctx.callbackQuery.message.message_id,
+          ctx.callbackQuery.message.message_id
+        );
+        await ctx.telegram.sendMessage(
+          ctx.chat.id,
           `Hurmatli <b>${ctx.chat.first_name}</b> , botimizdan bemalol foydalanishingiz mumkin !
       O'zingizga kerakli bo'limni tanlang 👇
           `,
