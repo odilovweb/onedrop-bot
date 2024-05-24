@@ -234,83 +234,131 @@ bot.start(async (ctx) => {
     });
     if (!isUser) {
       users.push({ id, balance: 0, referrals: 0, friends: [] });
-      users.forEach((i) => {
+      users.forEach(async (i) => {
         if (i.id == payload && payload) {
           i.referrals++;
           i.friends.push(id);
           i.balance = i.referrals * 0.1;
-          ctx.telegram.sendMessage(
-            id,
-            "Referral orqali ro'yhatdan o'tganingiz bilan tabriklayman 🎉"
-          );
-          ctx.telegram.sendMessage(
-            payload,
-            `<b>${ctx.chat.username}</b> ushbu foydalanuvchi sizning referralingiz orqali ro'yhatdan o'tdi va siz 0.1 USDT ga ega bo'ldingiz. <b>Sizning balansingiz ${i.balance} USDT</b>`,
-            { parse_mode: "HTML" }
-          );
+          try {
+            await ctx.telegram.sendMessage(
+              id,
+              "Referral orqali ro'yhatdan o'tganingiz bilan tabriklayman 🎉"
+            );
+          } catch (error) {
+            if (
+              error.code === 403 &&
+              error.description.includes("bot was blocked by the user")
+            ) {
+              console.log(`User ${ctx.from.id} blocked the bot.`);
+              // Optionally, remove the user from your database or take other actions
+            } else {
+              console.error("Failed to send message:", error);
+            }
+          }
+          try {
+            await ctx.telegram.sendMessage(
+              payload,
+              `<b>${ctx.chat.username}</b> ushbu foydalanuvchi sizning referralingiz orqali ro'yhatdan o'tdi va siz 0.1 USDT ga ega bo'ldingiz. <b>Sizning balansingiz ${i.balance} USDT</b>`,
+              { parse_mode: "HTML" }
+            );
+          } catch (error) {
+            if (
+              error.code === 403 &&
+              error.description.includes("bot was blocked by the user")
+            ) {
+              console.log(`User ${ctx.from.id} blocked the bot.`);
+              // Optionally, remove the user from your database or take other actions
+            } else {
+              console.error("Failed to send message:", error);
+            }
+          }
         }
       });
     }
 
     //referral end
-    ctx.telegram.sendMessage(
-      id,
-      `Hurmatli <b>foydalanuvchi</b> , botimizga hush kelibsiz !
-O'zingizga kerakli bo'limdan foydalanishingiz mumkin 👇
-    `,
-      {
-        parse_mode: "HTML",
-        reply_markup: {
-          inline_keyboard: [
-            [
-              {
-                text: "Hamster Kombat sotish 💰",
-                callback_data: "hamster-sell",
-              },
-            ],
-            [
-              {
-                text: "Notcoin sotish 💰",
-                callback_data: "notcoin-sell",
-              },
-            ],
-            [
-              {
-                text: "Pul sarflamasdan crypto ishlash 💲",
-                callback_data: "video-dars",
-              },
-            ],
-          ],
-        },
-      }
-    );
-  } else {
-    ctx.telegram.sendMessage(
-      id,
-      `Hurmatli <b>foydalanuvchi</b> , quyidagi kanalga obuna bo'lganingizdan so'ng botdan to'liq foydalanishingiz mumkin 👇
+    try {
+      await ctx.telegram.sendMessage(
+        id,
+        `Hurmatli <b>foydalanuvchi</b> , botimizga hush kelibsiz !
+  O'zingizga kerakli bo'limdan foydalanishingiz mumkin 👇
       `,
-      {
-        parse_mode: "HTML",
-        reply_markup: {
-          inline_keyboard: [
-            [{ text: "1️⃣ Kanal 📢", url: chanLink }],
-            [
-              {
-                text: "2️⃣ Kanal 📢",
-                url: chanLink1,
-              },
+        {
+          parse_mode: "HTML",
+          reply_markup: {
+            inline_keyboard: [
+              [
+                {
+                  text: "Hamster Kombat sotish 💰",
+                  callback_data: "hamster-sell",
+                },
+              ],
+              [
+                {
+                  text: "Notcoin sotish 💰",
+                  callback_data: "notcoin-sell",
+                },
+              ],
+              [
+                {
+                  text: "Pul sarflamasdan crypto ishlash 💲",
+                  callback_data: "video-dars",
+                },
+              ],
             ],
-            [
-              {
-                text: "3️⃣ Kanal 📢",
-                url: chanLink2,
-              },
-            ],
-            [{ text: "Tekshirish ✅", callback_data: "start" }],
-          ],
-        },
+          },
+        }
+      );
+    } catch (error) {
+      if (
+        error.code === 403 &&
+        error.description.includes("bot was blocked by the user")
+      ) {
+        console.log(`User ${ctx.from.id} blocked the bot.`);
+        // Optionally, remove the user from your database or take other actions
+      } else {
+        console.error("Failed to send message:", error);
       }
-    );
+    }
+  } else {
+    try {
+      await ctx.telegram.sendMessage(
+        id,
+        `Hurmatli <b>foydalanuvchi</b> , quyidagi kanalga obuna bo'lganingizdan so'ng botdan to'liq foydalanishingiz mumkin 👇
+        `,
+        {
+          parse_mode: "HTML",
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: "1️⃣ Kanal 📢", url: chanLink }],
+              [
+                {
+                  text: "2️⃣ Kanal 📢",
+                  url: chanLink1,
+                },
+              ],
+              [
+                {
+                  text: "3️⃣ Kanal 📢",
+                  url: chanLink2,
+                },
+              ],
+              [{ text: "Tekshirish ✅", callback_data: "start" }],
+            ],
+          },
+        }
+      );
+    } catch (error) {
+      if (
+        error.code === 403 &&
+        error.description.includes("bot was blocked by the user")
+      ) {
+        console.log(`User ${ctx.from.id} blocked the bot.`);
+        // Optionally, remove the user from your database or take other actions
+      } else {
+        console.error("Failed to send message:", error);
+      }
+    }
   }
 });
 
@@ -487,20 +535,44 @@ Hoziroq botga kiring 👉 ${referral}`,
 
       if (!isUser) {
         users.push({ id, balance: 0, referrals: 0, friends: [] });
-        users.forEach((i) => {
+        users.forEach(async (i) => {
           if (i.id == payload && payload) {
             i.referrals++;
             i.friends.push(ctx.chat.id);
             i.balance = i.referrals * 0.1;
-            ctx.telegram.sendMessage(
-              id,
-              "Referral orqali ro'yhatdan o'tganingiz bilan tabriklayman 🎉"
-            );
-            ctx.telegram.sendMessage(
-              payload,
-              `<b>${ctx.chat.username}</b> ushbu foydalanuvchi sizning referralingiz orqali ro'yhatdan o'tdi va siz 0.1 USDT ga ega bo'ldingiz. <b>Sizning balansingiz ${i.balance} USDT</b>`,
-              { parse_mode: "HTML" }
-            );
+            try {
+              await ctx.telegram.sendMessage(
+                id,
+                "Referral orqali ro'yhatdan o'tganingiz bilan tabriklayman 🎉"
+              );
+            } catch (error) {
+              if (
+                error.code === 403 &&
+                error.description.includes("bot was blocked by the user")
+              ) {
+                console.log(`User ${ctx.from.id} blocked the bot.`);
+                // Optionally, remove the user from your database or take other actions
+              } else {
+                console.error("Failed to send message:", error);
+              }
+            }
+            try {
+              await ctx.telegram.sendMessage(
+                payload,
+                `<b>${ctx.chat.username}</b> ushbu foydalanuvchi sizning referralingiz orqali ro'yhatdan o'tdi va siz 0.1 USDT ga ega bo'ldingiz. <b>Sizning balansingiz ${i.balance} USDT</b>`,
+                { parse_mode: "HTML" }
+              );
+            } catch (error) {
+              if (
+                error.code === 403 &&
+                error.description.includes("bot was blocked by the user")
+              ) {
+                console.log(`User ${ctx.from.id} blocked the bot.`);
+                // Optionally, remove the user from your database or take other actions
+              } else {
+                console.error("Failed to send message:", error);
+              }
+            }
           }
         });
       }
