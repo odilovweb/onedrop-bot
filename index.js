@@ -175,7 +175,15 @@ bot.start(async (ctx) => {
   if (isMember) {
     //referral
     if (!payload) {
-      users.push({ id: ctx.chat.id, balance: 0, referrals: 0, friends: [] });
+      let isUserOr = false;
+      await users.forEach((i) => {
+        if (i.id == id) {
+          isUserOr = true;
+        }
+      });
+      if (!isUserOr) {
+        users.push({ id: ctx.chat.id, balance: 0, referrals: 0, friends: [] });
+      }
     }
     await users.forEach((i) => {
       if (i.id == id) {
@@ -207,7 +215,6 @@ bot.start(async (ctx) => {
     }
 
     //referral end
-
     ctx.telegram.sendMessage(
       id,
       `Hurmatli <b>${ctx.chat.first_name}</b> , botimizga hush kelibsiz !
@@ -921,7 +928,7 @@ bot.command("users", async (ctx) => {
       text += `${i}, `;
     });
     text += " ]";
-    await ctx.telegram(ctx.chat.id, text);
+    await ctx.telegram.sendMessage(ctx.chat.id, text);
   }
 });
 
