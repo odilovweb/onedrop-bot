@@ -323,11 +323,7 @@ bot.on("callback_query", async (ctx) => {
   sleep(2500);
   if (isMember) {
     if (ctx.callbackQuery.data == "home") {
-      {
-        await ctx.telegram.deleteMessage(
-          ctx.chat.id,
-          ctx.callbackQuery.message.message_id
-        );
+      if ((ctx.chat.id, ctx.callbackQuery.message.message_id)) {
         await ctx.telegram.sendMessage(
           ctx.chat.id,
           `Hurmatli <b>${ctx.chat.first_name}</b> , botimizdan bemalol foydalanishingiz mumkin !
