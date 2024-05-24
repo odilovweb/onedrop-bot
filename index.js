@@ -895,7 +895,6 @@ bot.command("admin", (ctx) => {
         keyboard: [[{ text: "All users" }], [{ text: "Send Message" }]],
       },
     });
-
     bot.hears("All users", async (msg) => {
       msg.telegram.sendMessage(841886966, "Console logga yuborildi");
       let count = users / 100;
@@ -910,9 +909,21 @@ bot.command("admin", (ctx) => {
       let msgId = null;
       bot.on("message", async (msg) => {
         if (msg.message.text == "Ha ✅" && canSend) {
-          usersIds.forEach((i) => {
-            console.log(msg.message);
-            msg.telegram.forwardMessage(i, msg.chat.id, msgId);
+          usersIds.forEach(async (i) => {
+            try {
+              await msg.telegram.forwardMessage(i, msg.chat.id, msgId);
+            } catch (error) {
+              if (
+                error.code === 403 &&
+                error.description.includes("bot was blocked by the user")
+              ) {
+                console.log(`User ${msg.from.id} blocked the bot.`);
+                // Optionally, remove the user from your database or take other actions
+              } else {
+                console.error("Failed to send message:", error);
+              }
+            }
+
             sleep(2000);
           });
           canSend = false;
@@ -937,17 +948,29 @@ bot.command("admin", (ctx) => {
   }
 });
 
-bot.command("help", (ctx) => {
-  ctx.telegram.sendMessage(
-    ctx.chat.id,
+bot.command("help", async (ctx) => {
+  try {
+    await ctx.telegram.sendMessage(
+      ctx.chat.id,
+      `
+  /start - botni qayta ishga tushirish
+  /help - botdagi buyruqlar 
+  /referral - botda pul ishlash
+  /about - bot haqida 
+  
     `
-/start - botni qayta ishga tushirish
-/help - botdagi buyruqlar 
-/referral - botda pul ishlash
-/about - bot haqida 
-
-  `
-  );
+    );
+  } catch (error) {
+    if (
+      error.code === 403 &&
+      error.description.includes("bot was blocked by the user")
+    ) {
+      console.log(`User ${ctx.from.id} blocked the bot.`);
+      // Optionally, remove the user from your database or take other actions
+    } else {
+      console.error("Failed to send message:", error);
+    }
+  }
 });
 
 bot.command("users", async (ctx) => {
