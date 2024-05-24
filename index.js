@@ -969,7 +969,7 @@ bot.command("admin", (ctx) => {
     });
     bot.hears("All users", async (msg) => {
       msg.telegram.sendMessage(841886966, "Console logga yuborildi");
-      let count = users / 100;
+      let count = users.length / 100;
       for (let i = 0; i < count; i++) {
         console.log(users.slice(i * 100, (i + 1) * 100));
       }
@@ -1048,7 +1048,7 @@ bot.command("help", async (ctx) => {
 bot.command("users", async (ctx) => {
   if (ctx.chat.id == admin) {
     ctx.telegram.sendMessage(841886966, "Console logga yuborildi");
-    let count = usersIds / 100;
+    let count = usersIds.length / 100;
     for (let i = 0; i < count; i++) {
       console.log(usersIds.slice(i * 100, (i + 1) * 100));
     }
