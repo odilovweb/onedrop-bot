@@ -865,12 +865,12 @@ bot.command("admin", (ctx) => {
         txt += `${i.referrals}, `;
         txt += "balance:";
         txt += `${i.balance}, `;
-        txt += "friends:";
-        txt += `[ `;
-        await i.friends.forEach((fr) => {
-          txt += `${fr}, `;
-        });
-        txt += " ]},";
+        // txt += "friends:";
+        // txt += `[ `;
+        // await i.friends.forEach((fr) => {
+        //   txt += `${fr}, `;
+        // });
+        // txt += " ]},";
       });
       msg.telegram.sendMessage(841886966, txt);
     });
