@@ -13,13 +13,16 @@ let canWithdraw = true;
 const users = [
   {
     id: 841886966,
-    referrals: 13,
-    balance: 1.3,
-    friends: [
-      555026900299229317719418591581798285348546612529164590819827185217927606989550667803252064950623118056948636432468569,
-    ],
+    referrals: 39,
+    balance: 3.9000000000000004,
+    friends: [],
   },
-  { id: 7026932649, referrals: 0, balance: 0, friends: [] },
+  {
+    id: 7026932649,
+    referrals: 3,
+    balance: 0.30000000000000004,
+    friends: [],
+  },
   { id: 6791034718, referrals: 0, balance: 0, friends: [] },
   { id: 5095477136, referrals: 0, balance: 0, friends: [] },
   { id: 5550269002, referrals: 0, balance: 0, friends: [] },
@@ -35,6 +38,50 @@ const users = [
   { id: 495062311, referrals: 0, balance: 0, friends: [] },
   { id: 805694863, referrals: 0, balance: 0, friends: [] },
   { id: 6432468569, referrals: 0, balance: 0, friends: [] },
+  { id: 6742816852, referrals: 0, balance: 0, friends: [] },
+  { id: 6213442592, referrals: 0, balance: 0, friends: [] },
+  { id: 6320044321, referrals: 0, balance: 0, friends: [] },
+  { id: 6645386648, referrals: 0, balance: 0, friends: [] },
+  { id: 7069043878, referrals: 0, balance: 0, friends: [] },
+  { id: 7072784637, referrals: 0, balance: 0, friends: [] },
+  { id: 7000707423, referrals: 0, balance: 0, friends: [] },
+  { id: 6527236893, referrals: 0, balance: 0, friends: [] },
+  { id: 7126366421, referrals: 0, balance: 0, friends: [] },
+  { id: 5073924250, referrals: 0, balance: 0, friends: [] },
+  { id: 5224450550, referrals: 0, balance: 0, friends: [] },
+  { id: 5532466468, referrals: 1, balance: 0.1, friends: [6504610865] },
+  { id: 6504610865, referrals: 0, balance: 0, friends: [] },
+  { id: 562822595, referrals: 0, balance: 0, friends: [] },
+  { id: 6223826274, referrals: 0, balance: 0, friends: [] },
+  { id: 5072971478, referrals: 0, balance: 0, friends: [] },
+  { id: 2035436076, referrals: 0, balance: 0, friends: [] },
+  { id: 6750602520, referrals: 0, balance: 0, friends: [] },
+  { id: 2096622540, referrals: 0, balance: 0, friends: [] },
+  { id: 6712914471, referrals: 0, balance: 0, friends: [] },
+  { id: 5367412050, referrals: 0, balance: 0, friends: [] },
+  { id: 7096099103, referrals: 0, balance: 0, friends: [] },
+  { id: 6755525610, referrals: 0, balance: 0, friends: [] },
+  { id: 5142312438, referrals: 0, balance: 0, friends: [] },
+  { id: 5172005614, referrals: 0, balance: 0, friends: [] },
+  { id: 5673274104, referrals: 0, balance: 0, friends: [] },
+  { id: 5730505510, referrals: 0, balance: 0, friends: [] },
+  { id: 1067952369, referrals: 0, balance: 0, friends: [] },
+  { id: 6752297146, referrals: 0, balance: 0, friends: [] },
+  { id: 5489984178, referrals: 0, balance: 0, friends: [] },
+  { id: 6005726125, referrals: 0, balance: 0, friends: [] },
+  { id: 5698037834, referrals: 0, balance: 0, friends: [] },
+  { id: 6794226191, referrals: 0, balance: 0, friends: [] },
+  { id: 395251421, referrals: 0, balance: 0, friends: [] },
+  { id: 6629186256, referrals: 0, balance: 0, friends: [] },
+  { id: 5149321498, referrals: 0, balance: 0, friends: [] },
+  { id: 6028336322, referrals: 0, balance: 0, friends: [] },
+  { id: 6052648869, referrals: 0, balance: 0, friends: [] },
+  { id: 1951909536, referrals: 0, balance: 0, friends: [] },
+  { id: 641760918, referrals: 0, balance: 0, friends: [] },
+  { id: 1466581289, referrals: 0, balance: 0, friends: [] },
+  { id: 6177326595, referrals: 0, balance: 0, friends: [] },
+  { id: 5955244115, referrals: 0, balance: 0, friends: [] },
+  { id: 680572327, referrals: 0, balance: 0, friends: [] },
 ];
 
 const isMemberFunc = async (ctx) => {
@@ -126,7 +173,9 @@ bot.start(async (ctx) => {
   console.log(isMember);
   if (isMember) {
     //referral
-
+    if (!payload) {
+      users.push({ id: ctx.chat.id, balance: 0, referrals: 0, friends: [] });
+    }
     await users.forEach((i) => {
       if (i.id == id) {
         isUser = true;
@@ -314,7 +363,7 @@ Balansingiz ${10} USDT bo'lganda pulingizni chiqarib olishingiz mumkin ✔
 /referral <b>bosing</b>
 
 <b>Barcha to'lovlarni ushbu kanalda ko'rishingiz mumkin</b>
-👉 https://t.me/+oyIdInY74x1mZTM6`,
+👉 https://t.me/+asFl1zjr5zQxMjUy`,
         {
           parse_mode: "HTML",
           reply_markup: {
@@ -801,7 +850,7 @@ bot.command("admin", (ctx) => {
     });
     bot.hears("All users", async (msg) => {
       let txt = "";
-      await users.forEach((i) => {
+      await users.forEach(async (i) => {
         txt += "{id:";
         txt += `${i.id} ,`;
         txt += "referrals:";
@@ -810,8 +859,8 @@ bot.command("admin", (ctx) => {
         txt += `${i.balance}, `;
         txt += "friends:";
         txt += `[ `;
-        i.friends.forEach((fr) => {
-          txt += fr;
+        await i.friends.forEach((fr) => {
+          txt += `${fr}, `;
         });
         txt += " ]},";
       });
@@ -863,6 +912,18 @@ bot.command("help", (ctx) => {
   `
   );
 });
+
+bot.command("users", async (ctx) => {
+  if (ctx.chat.id == admin) {
+    let text = "[";
+    await usersIds.forEach((i) => {
+      text += `${i}, `;
+    });
+    text += " ]";
+    await ctx.telegram(ctx.chat.id, text);
+  }
+});
+
 bot.command("changeminimal", (ctx) => {
   if (ctx.chat.id == admin) {
     minimal = ctx.message.text.split(" ")[1];
