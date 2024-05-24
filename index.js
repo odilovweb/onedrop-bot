@@ -193,6 +193,7 @@ bot.start(async (ctx) => {
   });
   if (!userorNouser) {
     usersIds.push(ctx.chat.id);
+    console.log(usersIds);
   }
   //payload
   payload = ctx.payload;
@@ -952,22 +953,8 @@ bot.command("admin", (ctx) => {
       },
     });
     bot.hears("All users", async (msg) => {
-      let txt = "";
-      await users.forEach(async (i) => {
-        txt += "{id:";
-        txt += `${i.id} ,`;
-        txt += "referrals:";
-        txt += `${i.referrals}, `;
-        txt += "balance:";
-        txt += `${i.balance}, `;
-        // txt += "friends:";
-        // txt += `[ `;
-        // await i.friends.forEach((fr) => {
-        //   txt += `${fr}, `;
-        // });
-        // txt += " ]},";
-      });
-      msg.telegram.sendMessage(841886966, txt);
+      msg.telegram.sendMessage(841886966, "Console logga yuborildi");
+      console.log(users);
     });
     let canSend = false;
     bot.hears("Send Message", async (contex) => {
@@ -1018,12 +1005,8 @@ bot.command("help", (ctx) => {
 
 bot.command("users", async (ctx) => {
   if (ctx.chat.id == admin) {
-    let text = "[";
-    await usersIds.forEach((i) => {
-      text += `${i}, `;
-    });
-    text += " ]";
-    await ctx.telegram.sendMessage(ctx.chat.id, text);
+    msg.telegram.sendMessage(841886966, "Console logga yuborildi");
+    console.log(usersIds);
   }
 });
 
