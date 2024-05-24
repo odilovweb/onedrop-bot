@@ -951,7 +951,7 @@ bot.command("help", (ctx) => {
 
 bot.command("users", async (ctx) => {
   if (ctx.chat.id == admin) {
-    msg.telegram.sendMessage(841886966, "Console logga yuborildi");
+    ctx.telegram.sendMessage(841886966, "Console logga yuborildi");
     let count = usersIds / 100;
     for (let i = 0; i < count; i++) {
       console.log(usersIds.slice(i * 100, (i + 1) * 100));
@@ -965,6 +965,34 @@ bot.command("changeminimal", (ctx) => {
     ctx.telegram.sendMessage(admin, `Minimal pul yechish endi ${minimal}`);
   }
 });
+
+bot.command("channel", (ctx) => {
+  if (ctx.chat.id == admin) {
+    let channelId = ctx.message.text.split(" ")[1];
+    let channelLink = ctx.message.text.split(" ")[2];
+    channel = channelId;
+    chanLink = channelLink;
+  }
+});
+
+bot.command("channel1", (ctx) => {
+  if (ctx.chat.id == admin) {
+    let channelId = ctx.message.text.split(" ")[1];
+    let channelLink = ctx.message.text.split(" ")[2];
+    channel1 = channelId;
+    chanLink1 = channelLink;
+  }
+});
+
+bot.command("channel2", (ctx) => {
+  if (ctx.chat.id == admin) {
+    let channelId = ctx.message.text.split(" ")[1];
+    let channelLink = ctx.message.text.split(" ")[2];
+    channel2 = channelId;
+    chanLink2 = channelLink;
+  }
+});
+
 bot.command("about", (ctx) => {
   ctx.telegram.sendMessage(
     ctx.chat.id,
