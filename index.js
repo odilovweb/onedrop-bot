@@ -2,6 +2,9 @@ const { Telegraf, Telegram } = require("telegraf");
 const { message } = require("telegraf/filters");
 
 const bot = new Telegraf("7007761863:AAEUsrtn-BIdGcanJMdp4P7lke8f3bisBG8");
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 const usersIds = [
   5589656723, 5850078602, 841886966, 7026932649, 6367866435, 1246284570,
   5325327728, 6345907681, 6345907681, 6345907681, 6359956264, 5467128150,
@@ -317,7 +320,7 @@ bot.on("callback_query", async (ctx) => {
   const id = ctx.chat.id;
   const isMember = await isMemberFunc(ctx);
   //isMember
-
+  sleep(2500);
   if (isMember) {
     if (ctx.callbackQuery.data == "home") {
       if (
@@ -941,9 +944,7 @@ Hoziroq botga kiring 👉 ${referral}`,
     }
   );
 });
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+
 bot.command("admin", (ctx) => {
   if (ctx.chat.id == admin) {
     ctx.telegram.sendMessage(admin, "Siz botda adminsiz", {
