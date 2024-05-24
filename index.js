@@ -329,7 +329,7 @@ bot.on("callback_query", async (ctx) => {
      O'zingizga kerakli bo'limni tanlang 👇
          `
       ) {
-        ctx.telegram.editMessageText(
+        await ctx.telegram.editMessageText(
           ctx.chat.id,
           ctx.callbackQuery.message.message_id,
           ctx.callbackQuery.message.message_id,
@@ -370,7 +370,7 @@ bot.on("callback_query", async (ctx) => {
 
       👉 https://t.me/+AFmf0OKkk_k5ODVi`
       ) {
-        ctx.telegram.editMessageText(
+        await ctx.telegram.editMessageText(
           ctx.chat.id,
           ctx.callbackQuery.message.message_id,
           ctx.callbackQuery.message.message_id,
@@ -394,7 +394,7 @@ bot.on("callback_query", async (ctx) => {
 
       👉 https://t.me/+ACMH1IaKGek0M2Vi`
       ) {
-        ctx.telegram.editMessageText(
+        await ctx.telegram.editMessageText(
           ctx.chat.id,
           ctx.callbackQuery.message.message_id,
           ctx.callbackQuery.message.message_id,
@@ -429,7 +429,7 @@ bot.on("callback_query", async (ctx) => {
       <b>Barcha to'lovlarni ushbu kanalda ko'rishingiz mumkin</b>
       👉 https://t.me/+asFl1zjr5zQxMjUy`
       ) {
-        ctx.telegram.editMessageText(
+        await ctx.telegram.editMessageText(
           ctx.chat.id,
           ctx.callbackQuery.message.message_id,
           ctx.callbackQuery.message.message_id,
@@ -550,7 +550,7 @@ Hoziroq botga kiring 👉 ${referral}`,
       O'zingizga kerakli bo'limdan foydalanishingiz mumkin 👇
           `
       ) {
-        ctx.telegram.editMessageText(
+        await ctx.telegram.editMessageText(
           ctx.chat.id,
           ctx.callbackQuery.message.message_id,
           ctx.callbackQuery.message.message_id,
@@ -683,7 +683,7 @@ Ishlashda davom eting /referral`
         ctx.callbackQuery.message.text !==
         "Zayavkangiz muvaffaqiyatli adminga yuborildi. 24 soat ichida to'lov yuborilmasa adminga murojaat qiling. Admin: @m_odlov"
       ) {
-        ctx.telegram.editMessageText(
+        await ctx.telegram.editMessageText(
           ctx.chat.id,
           ctx.callbackQuery.message.message_id,
           ctx.callbackQuery.message.message_id,
@@ -832,7 +832,7 @@ Ushbu ko'rinishda yuboring: /bep20 0x996bbd17516a6a8d5b6b08f8b929a610df775541
         `Hurmatli <b>${ctx.chat.first_name}</b> , quyidagi kanalga obuna bo'lganingizdan so'ng botdan to'liq foydalanishingiz mumkin 👇
       `
       ) {
-        ctx.telegram.editMessageText(
+        await ctx.telegram.editMessageText(
           ctx.chat.id,
           ctx.callbackQuery.message.message_id,
           ctx.callbackQuery.message.message_id,
