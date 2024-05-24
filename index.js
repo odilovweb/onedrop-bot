@@ -895,6 +895,7 @@ bot.command("admin", (ctx) => {
         keyboard: [[{ text: "All users" }], [{ text: "Send Message" }]],
       },
     });
+
     bot.hears("All users", async (msg) => {
       msg.telegram.sendMessage(841886966, "Console logga yuborildi");
       let count = users / 100;
