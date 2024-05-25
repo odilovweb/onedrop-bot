@@ -1248,34 +1248,40 @@ bot.command("videos", async (ctx) => {
   }
 });
 
+const fetchAllRecords = async () => {
+  let records = [];
+  let offset = null;
+
+  do {
+    const params = offset ? { offset } : {};
+    const response = await axios.get(apiBaseUrl2, {
+      headers: { Authorization: `Bearer ${apiCode}` },
+      params,
+    });
+
+    records = records.concat(response.data.records);
+    offset = response.data.offset;
+  } while (offset);
+
+  return records;
+};
+
 bot.command("downIds", async (ctx) => {
   if (ctx.chat.id == admin) {
     try {
-      const response = await axios.get(apiBaseUrl2, {
-        headers: { Authorization: `Bearer ${apiCode}` },
-      });
-      const apiUsers = response.data.records;
-
-      if (apiUsers.length === 0) {
-        ctx.reply("No users found.");
+      const records = await fetchAllRecords();
+      if (records.length === 0) {
+        console.log("No records found.");
       } else {
-        usersIds = [];
-        const count = apiUsers.length / 100;
-        console.log(count);
-        console.log(apiUsers);
-        for (let i = 0; i < count; i++) {
-          apiUsers.slice(i, i + 1).forEach((u) => {
-            usersIds.push(Number(u.fields.id));
-          });
-        }
-
+        const apiUsers = records;
+        console.log(records.length);
+        apiUsers.forEach((u) => {
+          usersIds.push(Number(u.fields.id));
+        });
         ctx.reply("Tayyor ✅");
-        // console.log(usersIds);
-        // console.log(response.data);
       }
     } catch (error) {
-      console.error("Error fetching users:", error);
-      ctx.reply("Failed to fetch users. Please try again later.");
+      console.error(error);
     }
   }
 });
