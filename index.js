@@ -449,7 +449,7 @@ Hoziroq botga kiring 👉 https://t.me/OneDrop_uzbot?start=vertus`,
     } else if (ctx.callbackQuery.data == "body") {
       try {
         await ctx.replyWithVideo("https://t.me/k02isniwu2kjsi/5", {
-          caption: `<b>Catizen 🐱</b>
+          caption: `<b>BodyPump 🏋️‍♀️</b>
 
 Body Pump loyihasi ham yaxhshi loyihalardan biri. Hoziroq boshlang.
 
