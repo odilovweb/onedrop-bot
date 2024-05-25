@@ -1,44 +1,19 @@
 const { Telegraf, Telegram } = require("telegraf");
 const { message } = require("telegraf/filters");
-
-const bot = new Telegraf("7007761863:AAEUsrtn-BIdGcanJMdp4P7lke8f3bisBG8");
+const axios = require("axios");
+const API = "7007761863:AAEUsrtn-BIdGcanJMdp4P7lke8f3bisBG8";
+const apiCode =
+  "patdGIsCaU7hT4Cb0.18bf5b02fda3faa8f4bc563a8f9dafb567624a6e356e1a81ef2d699d3948db45";
+const bot = new Telegraf(API);
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
-const usersIds = [
-  5589656723, 5850078602, 841886966, 7026932649, 6367866435, 1246284570,
-  5325327728, 6345907681, 6345907681, 6345907681, 6359956264, 5467128150,
-  5333793030, 5467128150, 5333793030, 6359956264, 6210633519, 6879626623,
-  5333793030, 5333793030, 6754698931, 5078928793, 1525537978, 6501150300,
-  6501150300, 5879320290, 841886966, 5879320290, 6920204255, 5124879583,
-  5142312438, 6525800286, 5517308296, 6046569771, 5517308296, 5713474819,
-  5124879583, 5517308296, 5517308296, 5910929593, 7050610790, 5977867112,
-  1365863023, 6400959582, 1155098067, 817496601, 844071645, 6300303346,
-  6776644833, 1531672517, 5950572394, 5950572394, 1915745263, 522183608,
-  6736705743, 6462048726, 6736705743, 2018850986, 240229643, 2070688506,
-  5385426718, 866260732, 1941257766, 6074836256, 5605983528, 423532035,
-  6499392493, 5836483745, 5826843733, 5836483745, 5836483745, 5836483745,
-  5836483745, 5309589198, 6282160113, 5309589198, 747070981, 743134625,
-  6535199073, 5244048733, 530203322, 7129665254, 6387858106, 7129665254,
-  6089644216, 6131769205, 6131769205, 6725053461, 5792761090, 6462832618,
-  926729683, 6725053461, 926729683, 7178665032, 6793866440, 6793866440,
-  530203322, 6216527011, 494663382, 6519734528, 717884835, 717884835,
-  1102502519, 6355078731, 5584015653, 5753439271, 7048820668, 5885888344,
-  5626136679, 6879180339, 963215782, 963215782, 6785595901, 6838248919,
-  6536819193, 6051344739, 6654484582, 1089148097, 6931023357, 6799104709,
-  741652131, 6931023357, 6931023357, 6355078731, 6355078731, 7177882535,
-  7177882535, 6931023357, 7177882535, 6931023357, 6931023357, 6931023357,
-  6945600977, 7095625844, 6945600977, 1786351405, 6945600977, 6364417776,
-  1948319280, 6973390662, 6973390662, 584514620, 6973390662, 1147568169,
-  6963753928, 6963753928, 5907324504, 5907324504, 6973390662, 5429917465,
-  6096931125, 6145006961, 6364417776, 6096931125, 6916643707, 5576928180,
-  5576928180, 6794795257, 896853845, 6916643707, 6676259165, 630036403,
-  1292881201, 6651593015, 5137344768, 6317306695, 5407259794, 662227688,
-  1135762875, 5754994212, 6431961429, 5154330601, 5242676037, 6423300646,
-  5947428003, 6096931125, 6096931125, 5947428003, 6982465319, 6028450543,
-  6431961429, 292455282, 5847755217, 5935720511, 6839420869, 6317306695,
-  5149940546, 6878149294, 1120961942, 1120961942, 1120961942, 1120961942,
-];
+let usersIds = [];
+
+const apiBaseUrl =
+  "https://api.airtable.com/v0/app3A2MZlE8zw9wjM/tblsfUh1SNk2ZvHQU";
+const apiBaseUrl2 =
+  "https://api.airtable.com/v0/app3A2MZlE8zw9wjM/tblue5zeLDqj87zEw";
 const admin = "841886966";
 
 let channel = "2018020256";
@@ -52,79 +27,7 @@ let chanLink2 = "https://t.me/+CQRKl4gO8rswNmQ6";
 const zayavka = "1882547088";
 let minimal = 10;
 let canWithdraw = true;
-const users = [
-  {
-    id: 841886966,
-    referrals: 39,
-    balance: 3.9000000000000004,
-    friends: [],
-  },
-  {
-    id: 7026932649,
-    referrals: 3,
-    balance: 0.30000000000000004,
-    friends: [],
-  },
-  { id: 6791034718, referrals: 0, balance: 0, friends: [] },
-  { id: 5095477136, referrals: 0, balance: 0, friends: [] },
-  { id: 5550269002, referrals: 0, balance: 0, friends: [] },
-  { id: 992293177, referrals: 0, balance: 0, friends: [] },
-  { id: 1941859158, referrals: 1, balance: 0.1, friends: [2120271620] },
-  { id: 1798285348, referrals: 0, balance: 0, friends: [] },
-  { id: 2120271620, referrals: 0, balance: 0, friends: [] },
-  { id: 5466125291, referrals: 0, balance: 0, friends: [] },
-  { id: 6459081982, referrals: 0, balance: 0, friends: [] },
-  { id: 7185217927, referrals: 0, balance: 0, friends: [] },
-  { id: 6069895506, referrals: 0, balance: 0, friends: [] },
-  { id: 6780325206, referrals: 0, balance: 0, friends: [] },
-  { id: 495062311, referrals: 0, balance: 0, friends: [] },
-  { id: 805694863, referrals: 0, balance: 0, friends: [] },
-  { id: 6432468569, referrals: 0, balance: 0, friends: [] },
-  { id: 6742816852, referrals: 0, balance: 0, friends: [] },
-  { id: 6213442592, referrals: 0, balance: 0, friends: [] },
-  { id: 6320044321, referrals: 0, balance: 0, friends: [] },
-  { id: 6645386648, referrals: 0, balance: 0, friends: [] },
-  { id: 7069043878, referrals: 0, balance: 0, friends: [] },
-  { id: 7072784637, referrals: 0, balance: 0, friends: [] },
-  { id: 7000707423, referrals: 0, balance: 0, friends: [] },
-  { id: 6527236893, referrals: 0, balance: 0, friends: [] },
-  { id: 7126366421, referrals: 0, balance: 0, friends: [] },
-  { id: 5073924250, referrals: 0, balance: 0, friends: [] },
-  { id: 5224450550, referrals: 0, balance: 0, friends: [] },
-  { id: 5532466468, referrals: 1, balance: 0.1, friends: [6504610865] },
-  { id: 6504610865, referrals: 0, balance: 0, friends: [] },
-  { id: 562822595, referrals: 0, balance: 0, friends: [] },
-  { id: 6223826274, referrals: 0, balance: 0, friends: [] },
-  { id: 5072971478, referrals: 0, balance: 0, friends: [] },
-  { id: 2035436076, referrals: 0, balance: 0, friends: [] },
-  { id: 6750602520, referrals: 0, balance: 0, friends: [] },
-  { id: 2096622540, referrals: 0, balance: 0, friends: [] },
-  { id: 6712914471, referrals: 0, balance: 0, friends: [] },
-  { id: 5367412050, referrals: 0, balance: 0, friends: [] },
-  { id: 7096099103, referrals: 0, balance: 0, friends: [] },
-  { id: 6755525610, referrals: 0, balance: 0, friends: [] },
-  { id: 5142312438, referrals: 0, balance: 0, friends: [] },
-  { id: 5172005614, referrals: 0, balance: 0, friends: [] },
-  { id: 5673274104, referrals: 0, balance: 0, friends: [] },
-  { id: 5730505510, referrals: 0, balance: 0, friends: [] },
-  { id: 1067952369, referrals: 0, balance: 0, friends: [] },
-  { id: 6752297146, referrals: 0, balance: 0, friends: [] },
-  { id: 5489984178, referrals: 0, balance: 0, friends: [] },
-  { id: 6005726125, referrals: 0, balance: 0, friends: [] },
-  { id: 5698037834, referrals: 0, balance: 0, friends: [] },
-  { id: 6794226191, referrals: 0, balance: 0, friends: [] },
-  { id: 395251421, referrals: 0, balance: 0, friends: [] },
-  { id: 6629186256, referrals: 0, balance: 0, friends: [] },
-  { id: 5149321498, referrals: 0, balance: 0, friends: [] },
-  { id: 6028336322, referrals: 0, balance: 0, friends: [] },
-  { id: 6052648869, referrals: 0, balance: 0, friends: [] },
-  { id: 1951909536, referrals: 0, balance: 0, friends: [] },
-  { id: 641760918, referrals: 0, balance: 0, friends: [] },
-  { id: 1466581289, referrals: 0, balance: 0, friends: [] },
-  { id: 6177326595, referrals: 0, balance: 0, friends: [] },
-  { id: 5955244115, referrals: 0, balance: 0, friends: [] },
-  { id: 680572327, referrals: 0, balance: 0, friends: [] },
-];
+let users = [];
 
 const isMemberFunc = async (ctx) => {
   const id = ctx.chat.id;
@@ -159,165 +62,218 @@ const isMemberFunc = async (ctx) => {
   }
 };
 
-const isMemberFuncId = async (idBn, ctx) => {
-  const id = idBn;
-  const member = await ctx.telegram
-    .getChatMember(`-100${channel}`, id)
-    .then((s) => s.status)
-    .catch((e) => console.log(e));
+// const isMemberFuncId = async (idBn, ctx) => {
+//   const id = idBn;
+//   const member = await ctx.telegram
+//     .getChatMember(`-100${channel}`, id)
+//     .then((s) => s.status)
+//     .catch((e) => console.log(e));
 
-  const member1 = await ctx.telegram
-    .getChatMember(`-100${channel1}`, id)
-    .then((s) => s.status)
-    .catch((e) => console.log(e));
+//   const member1 = await ctx.telegram
+//     .getChatMember(`-100${channel1}`, id)
+//     .then((s) => s.status)
+//     .catch((e) => console.log(e));
 
-  const member2 = await ctx.telegram
-    .getChatMember(`-100${channel2}`, id)
-    .then((s) => s.status)
-    .catch((e) => console.log(e));
+//   const member2 = await ctx.telegram
+//     .getChatMember(`-100${channel2}`, id)
+//     .then((s) => s.status)
+//     .catch((e) => console.log(e));
 
-  if (member == "creator" || member == "member") {
-    if (member1 == "creator" || member1 == "member") {
-      if (member2 == "creator" || member2 == "member") {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
-  } else {
-    return false;
-  }
-};
+//   if (member == "creator" || member == "member") {
+//     if (member1 == "creator" || member1 == "member") {
+//       if (member2 == "creator" || member2 == "member") {
+//         return true;
+//       } else {
+//         return false;
+//       }
+//     } else {
+//       return false;
+//     }
+//   } else {
+//     return false;
+//   }
+// };
 
 let payload = false;
 bot.start(async (ctx) => {
-  let userorNouser = false;
-  await usersIds.forEach((i) => {
-    if (i.id == ctx.chat.id) {
-      userorNouser = true;
+  const id = ctx.chat.id;
+  {
+    let isUserOr = false;
+    usersIds.forEach((i) => {
+      if (i == id) {
+        isUserOr = true;
+      }
+    });
+
+    if (!isUserOr) {
+      const userData = {
+        fields: {
+          id: `${ctx.chat.id}`,
+        },
+      };
+
+      try {
+        const response = await axios.post(apiBaseUrl2, userData, {
+          headers: {
+            Authorization: `Bearer ${apiCode}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        usersIds.push(ctx.chat.id);
+        console.log("User added");
+      } catch (error) {
+        console.error("Error adding user:", error);
+        ctx.reply("Failed to add user. Please try again later.");
+      }
     }
-  });
-  if (!userorNouser) {
-    usersIds.push(ctx.chat.id);
-    console.log(usersIds);
   }
+
   //payload
   payload = ctx.payload;
-  let isUser = false;
   //payload
 
   //isMember
-  const id = ctx.chat.id;
+
   const isMember = await isMemberFunc(ctx);
   //isMember
 
-  console.log(isMember);
   if (isMember) {
     //referral
-    if (!payload) {
-      let isUserOr = false;
-      await users.forEach((i) => {
-        if (i.id == id) {
-          isUserOr = true;
-        }
-      });
-      if (!isUserOr) {
-        users.push({ id: ctx.chat.id, balance: 0, referrals: 0, friends: [] });
-      }
-    }
-    await users.forEach((i) => {
-      if (i.id == id) {
-        isUser = true;
-      }
-    });
-    if (!isUser) {
-      users.push({ id, balance: 0, referrals: 0, friends: [] });
-      users.forEach(async (i) => {
-        if (i.id == payload && payload) {
-          i.referrals++;
-          i.friends.push(id);
-          i.balance = i.referrals * 0.1;
-          try {
-            await ctx.telegram.sendMessage(
-              id,
-              "Referral orqali ro'yhatdan o'tganingiz bilan tabriklayman 🎉"
-            );
-          } catch (error) {
-            if (
-              error.code === 403 &&
-              error.description.includes("bot was blocked by the user")
-            ) {
-              console.log(`User ${ctx.from.id} blocked the bot.`);
-              // Optionally, remove the user from your database or take other actions
-            } else {
-              console.error("Failed to send message:", error);
-            }
-          }
-          try {
-            await ctx.telegram.sendMessage(
-              payload,
-              `<b>${ctx.chat.username}</b> ushbu foydalanuvchi sizning referralingiz orqali ro'yhatdan o'tdi va siz 0.1 USDT ga ega bo'ldingiz. <b>Sizning balansingiz ${i.balance} USDT</b>`,
-              { parse_mode: "HTML" }
-            );
-          } catch (error) {
-            if (
-              error.code === 403 &&
-              error.description.includes("bot was blocked by the user")
-            ) {
-              console.log(`User ${ctx.from.id} blocked the bot.`);
-              // Optionally, remove the user from your database or take other actions
-            } else {
-              console.error("Failed to send message:", error);
-            }
-          }
-        }
-      });
-    }
 
     //referral end
-    try {
-      await ctx.telegram.sendMessage(
-        id,
-        `Hurmatli <b>foydalanuvchi</b> , botimizga hush kelibsiz !
-  O'zingizga kerakli bo'limdan foydalanishingiz mumkin 👇
-      `,
-        {
-          parse_mode: "HTML",
-          reply_markup: {
-            inline_keyboard: [
-              [
-                {
-                  text: "Hamster Kombat sotish 💰",
-                  callback_data: "hamster-sell",
-                },
+
+    if (payload == "hot") {
+      try {
+        await ctx.telegram.sendMessage(
+          ctx.chat.id,
+          "Near Hot loyihasining darsligini olish uchun bosing 👇",
+          {
+            reply_markup: {
+              inline_keyboard: [
+                [{ text: "Near Hot Darslik", callback_data: "hot" }],
+                [
+                  {
+                    text: "Botning boshqa funksiyalari",
+                    callback_data: "home",
+                  },
+                ],
               ],
-              [
-                {
-                  text: "Notcoin sotish 💰",
-                  callback_data: "notcoin-sell",
-                },
+            },
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (payload == "catizen") {
+      try {
+        await ctx.telegram.sendMessage(
+          ctx.chat.id,
+          "Catizen loyihasining darsligini olish uchun bosing 👇",
+          {
+            reply_markup: {
+              inline_keyboard: [
+                [{ text: "Catizen Darslik", callback_data: "catizen" }],
+                [
+                  {
+                    text: "Botning boshqa funksiyalari",
+                    callback_data: "home",
+                  },
+                ],
               ],
-              [
-                {
-                  text: "Pul sarflamasdan crypto ishlash 💲",
-                  callback_data: "video-dars",
-                },
+            },
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (payload == "vertus") {
+      try {
+        await ctx.telegram.sendMessage(
+          ctx.chat.id,
+          "Vertus Wallet loyihasining darsligini olish uchun bosing 👇",
+          {
+            reply_markup: {
+              inline_keyboard: [
+                [{ text: "Vertus Wallet Darslik", callback_data: "vertus" }],
+                [
+                  {
+                    text: "Botning boshqa funksiyalari",
+                    callback_data: "home",
+                  },
+                ],
               ],
-            ],
-          },
+            },
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (payload == "body") {
+      try {
+        await ctx.telegram.sendMessage(
+          ctx.chat.id,
+          "BodyPump loyihasining darsligini olish uchun bosing 👇",
+          {
+            reply_markup: {
+              inline_keyboard: [
+                [{ text: "BodyPump Darslik", callback_data: "body" }],
+                [
+                  {
+                    text: "Botning boshqa funksiyalari",
+                    callback_data: "home",
+                  },
+                ],
+              ],
+            },
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        await ctx.telegram.sendMessage(
+          id,
+          `Hurmatli <b>foydalanuvchi</b> , botimizga hush kelibsiz !
+    O'zingizga kerakli bo'limdan foydalanishingiz mumkin 👇
+        `,
+          {
+            parse_mode: "HTML",
+            reply_markup: {
+              inline_keyboard: [
+                [
+                  {
+                    text: "Hamster Kombat sotish 💰",
+                    callback_data: "hamster-sell",
+                  },
+                ],
+                [
+                  {
+                    text: "Tapswap sotish 💰",
+                    callback_data: "notcoin-sell",
+                  },
+                ],
+                [
+                  {
+                    text: "Telegram Airdroplar 🏆",
+                    callback_data: "telegram-app",
+                  },
+                ],
+              ],
+            },
+          }
+        );
+      } catch (error) {
+        if (
+          error.code === 403 &&
+          error.description.includes("bot was blocked by the user")
+        ) {
+          console.log(`User ${ctx.from.id} blocked the bot.`);
+          // Optionally, remove the user from your database or take other actions
+        } else {
+          console.error("Failed to send message:", error);
         }
-      );
-    } catch (error) {
-      if (
-        error.code === 403 &&
-        error.description.includes("bot was blocked by the user")
-      ) {
-        console.log(`User ${ctx.from.id} blocked the bot.`);
-        // Optionally, remove the user from your database or take other actions
-      } else {
-        console.error("Failed to send message:", error);
       }
     }
   } else {
@@ -390,14 +346,14 @@ bot.on("callback_query", async (ctx) => {
                 ],
                 [
                   {
-                    text: "Notcoin sotish 💰",
+                    text: "Tapswap sotish 💰",
                     callback_data: "notcoin-sell",
                   },
                 ],
                 [
                   {
-                    text: "Pul sarflamasdan crypto ishlash 💲",
-                    callback_data: "video-dars",
+                    text: "Telegram Airdroplar 🏆",
+                    callback_data: "telegram-app",
                   },
                 ],
               ],
@@ -405,27 +361,175 @@ bot.on("callback_query", async (ctx) => {
           }
         );
       }
-    } else if (ctx.callbackQuery.data == "notcoin-sell") {
-      if (
-        ctx.callbackQuery.message.text !==
-        `<b>Notcoin sotish uchun ushbu kanalga a'zo bo'lishingiz kerak 👇</b> 
-
-      👉 https://t.me/+AFmf0OKkk_k5ODVi`
-      ) {
-        await ctx.telegram.sendMessage(
-          ctx.chat.id,
-          `<b>Notcoin sotish uchun ushbu kanalga a'zo bo'lishingiz kerak 👇</b> 
-  
-  👉 https://t.me/+AFmf0OKkk_k5ODVi`,
+    } else if (ctx.callbackQuery.data == "telegram-app") {
+      try {
+        await ctx.replyWithPhoto(
+          { source: "telegram.png" },
           {
+            caption: `<b>Ushbu bo'limda telegramda airdrop beradigan loyihalarda ishtirok etishni o'rganishingiz mumkin</b>
+O'zingizga kerakli loyihani tanlang 👇`,
             parse_mode: "HTML",
             reply_markup: {
               inline_keyboard: [
-                [{ text: "Ortga qaytish 🔙", callback_data: "home" }],
+                [{ text: "Near HOT 🔥", callback_data: "hot" }],
+                [{ text: "Catizen 🐱", callback_data: "catizen" }],
+                [{ text: "Body Pump 🏋️‍♀️", callback_data: "body" }],
+                [{ text: "Vertus Wallet 🌲", callback_data: "vertus" }],
               ],
             },
           }
         );
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (ctx.callbackQuery.data == "catizen") {
+      try {
+        await ctx.replyWithVideo("https://t.me/k02isniwu2kjsi/7", {
+          caption: `<b>Catizen 🐱</b>
+
+Catizen loyihasi Telegram va Notcoin tomonida qo'llab quvvatlanadi. Bu degani Airdrop berish ehtimoli juda yuqori. Hoziroq ishlashni boshlang.
+
+Link: https://t.me/catizenbot/gameapp?startapp=r_2761_1084914
+
+Ushbu videoni yaqinlaringiz bilan ulashing 👇`,
+          parse_mode: "HTML",
+          reply_markup: {
+            inline_keyboard: [
+              [
+                {
+                  text: "Yaqinlaringizga ulashing ✈",
+                  url: `https://t.me/share/url?url=Catizen Darslik 🐱&text=
+🎮Ushbu link orqali Near Hot loyihasi to'g'risida bepul darslik olishingiz mumkin.
+                  
+Hoziroq botga kiring 👉 https://t.me/OneDrop_uzbot?start=catizen`,
+                },
+              ],
+              [
+                { text: "Orqaga 🔙", callback_data: "telegram-app" },
+                { text: "Bosh Menu 🏠", callback_data: "home" },
+              ],
+            ],
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (ctx.callbackQuery.data == "vertus") {
+      try {
+        await ctx.replyWithVideo("https://t.me/k02isniwu2kjsi/4", {
+          caption: `<b>Vertus 🌲</b>
+
+Vertus loyihasi Ton tarmog'ida yaratilgan. Ushbu loyiha ham ishonchli. Hoziroq ishlashni boshlang.
+
+Link: t.me/vertus_app_bot/app?startapp=841886966
+
+Ushbu videoni yaqinlaringiz bilan ulashing 👇`,
+          parse_mode: "HTML",
+          reply_markup: {
+            inline_keyboard: [
+              [
+                {
+                  text: "Yaqinlaringizga ulashing ✈",
+                  url: `https://t.me/share/url?url=Vertus Darslik 🌲&text=
+🎮Ushbu link orqali Near Hot loyihasi to'g'risida bepul darslik olishingiz mumkin.
+                  
+Hoziroq botga kiring 👉 https://t.me/OneDrop_uzbot?start=vertus`,
+                },
+              ],
+              [
+                { text: "Orqaga 🔙", callback_data: "telegram-app" },
+                { text: "Bosh Menu 🏠", callback_data: "home" },
+              ],
+            ],
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (ctx.callbackQuery.data == "body") {
+      try {
+        await ctx.replyWithVideo("https://t.me/k02isniwu2kjsi/5", {
+          caption: `<b>Catizen 🐱</b>
+
+Body Pump loyihasi ham yaxhshi loyihalardan biri. Hoziroq boshlang.
+
+Link:https://t.me/Bodypump_app_bot?start=67b46fd1-21cc-413c-8840-5377e52f8b5e
+
+Ushbu videoni yaqinlaringiz bilan ulashing 👇`,
+          parse_mode: "HTML",
+          reply_markup: {
+            inline_keyboard: [
+              [
+                {
+                  text: "Yaqinlaringizga ulashing ✈",
+                  url: `https://t.me/share/url?url=BodyPump Darslik 🏋️‍♀️&text=
+🎮Ushbu link orqali Near Hot loyihasi to'g'risida bepul darslik olishingiz mumkin.
+                  
+Hoziroq botga kiring 👉 https://t.me/OneDrop_uzbot?start=body`,
+                },
+              ],
+              [
+                { text: "Orqaga 🔙", callback_data: "telegram-app" },
+                { text: "Bosh Menu 🏠", callback_data: "home" },
+              ],
+            ],
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (ctx.callbackQuery.data == "hot") {
+      try {
+        await ctx.replyWithVideo("https://t.me/k02isniwu2kjsi/6", {
+          caption: `<b>Near Hot</b>
+
+Hot loyihasi top kriptavalyutalardan biri bo'lgan Near bilan hamkorlikda ochilgan. Ushbu loyiha oz fursat ichida juda ham yaxshi natijalar ko'rsatdi. Tezroq ushbu loyihada ishtirok etishni boshlang.
+
+Link: https://t.me/herewalletbot/app?startapp=167810
+
+Ushbu videoni yaqinlaringiz bilan ulashing 👇`,
+          parse_mode: "HTML",
+          reply_markup: {
+            inline_keyboard: [
+              [
+                {
+                  text: "Yaqinlaringizga ulashing ✈",
+                  url: `https://t.me/share/url?url=Near Hot Darslik 🔥&text=
+🎮Ushbu link orqali Near Hot loyihasi to'g'risida bepul darslik olishingiz mumkin.
+                  
+Hoziroq botga kiring 👉 https://t.me/OneDrop_uzbot?start=hot`,
+                },
+              ],
+              [
+                { text: "Orqaga 🔙", callback_data: "telegram-app" },
+                { text: "Bosh Menu 🏠", callback_data: "home" },
+              ],
+            ],
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (ctx.callbackQuery.data == "notcoin-sell") {
+      {
+        try {
+          await ctx.telegram.sendMessage(
+            ctx.chat.id,
+            `<b>Tapswap sotish uchun ushbu kanalga a'zo bo'lishingiz kerak 👇</b> 
+    
+    👉 https://t.me/+LzI6C5bOHCdhNzQ6`,
+            {
+              parse_mode: "HTML",
+              reply_markup: {
+                inline_keyboard: [
+                  [{ text: "Ortga qaytish 🔙", callback_data: "home" }],
+                ],
+              },
+            }
+          );
+        } catch (error) {
+          console.log(error);
+        }
       }
     } else if (ctx.callbackQuery.data == "hamster-sell") {
       {
@@ -479,138 +583,186 @@ bot.on("callback_query", async (ctx) => {
           }
         );
       }
-    } else if (ctx.callbackQuery.data == "earn") {
-      const referral = generateReferralLink(ctx.chat.id);
-      let referrals = 0;
-      await users.forEach((i) => {
-        if (i.id == ctx.chat.id) {
-          referrals = i.referrals;
-        }
-      });
-      ctx.replyWithPhoto(
-        { source: "onedrop.png" },
-        {
-          caption: `<b>Ushbu bot orqali do'stlaringizni botga taklif qilib kriptavalyuta (USDT) ishlashingiz mumkin.</b>
+    }
+    //     else if (ctx.callbackQuery.data == "earn") {
+    //       const referral = generateReferralLink(ctx.chat.id);
+    //       let referrals = 0;
+    //       await users.forEach((i) => {
+    //         if (i.id == ctx.chat.id) {
+    //           referrals = i.referrals;
+    //         }
+    //       });
+    //       ctx.replyWithPhoto(
+    //         { source: "onedrop.png" },
+    //         {
+    //           caption: `<b>Ushbu bot orqali do'stlaringizni botga taklif qilib kriptavalyuta (USDT) ishlashingiz mumkin.</b>
 
-Sizning referallaringiz soni: <b>${referrals} ta</b>
-Sizning balansingiz : <b>${referrals * 0.1} USDT</b>
+    // Sizning referallaringiz soni: <b>${referrals} ta</b>
+    // Sizning balansingiz : <b>${referrals * 0.1} USDT</b>
 
-Balansingiz ${minimal} usdt ga yetgandan pulingizni chiqarib olishingiz mumkin.
+    // Balansingiz ${minimal} usdt ga yetgandan pulingizni chiqarib olishingiz mumkin.
 
-Sizning referral linkingiz 👇
-${referral}
-`,
-          parse_mode: "HTML",
-          reply_markup: {
-            inline_keyboard: [
-              [
-                {
-                  text: "Yaqinlaringizga yuboring ✈",
-                  url: `https://t.me/share/url?url=OneDrops Bot&text=
-💰 Ushbu bot orqali do'stlaringizni botga taklif qilib kriptavalyuta (USDT) ishlashingiz mumkin.
-🎮Bundan tashqari botda notcoin va hamster kombatga o'xshagan o'yinlarni tangalarni sotish o'rgatiladi.
+    // Sizning referral linkingiz 👇
+    // // ${referral}
+    // // `,
+    //           parse_mode: "HTML",
+    //           reply_markup: {
+    //             inline_keyboard: [
+    //               [
+    //                 {
+    //                   text: "Yaqinlaringizga yuboring ✈",
+    //                   url: `https://t.me/share/url?url=OneDrops Bot&text=
+    // 💰 Ushbu bot orqali do'stlaringizni botga taklif qilib kriptavalyuta (USDT) ishlashingiz mumkin.
+    // 🎮Bundan tashqari botda notcoin , tapswap va hamster kombatga o'xshagan o'yinlarni tangalarni sotish o'rgatiladi.
 
-Hoziroq botga kiring 👉 ${referral}`,
-                },
-              ],
-              [
-                { text: "Pul yechish 💰", callback_data: "withdrawl" },
-                {
-                  text: "Bosh menu 🏠",
-                  url: "https://t.me/Onedrop_uzbot?start=841886966",
-                },
-              ],
-            ],
-          },
-        }
-      );
-    } else if (ctx.callbackQuery.data == "start") {
-      //referral
-      let isUser = false;
-      await users.forEach((i) => {
-        if (i.id == id) {
-          isUser = true;
-        }
-      });
-
-      if (!isUser) {
-        users.push({ id, balance: 0, referrals: 0, friends: [] });
-        users.forEach(async (i) => {
-          if (i.id == payload && payload) {
-            i.referrals++;
-            i.friends.push(ctx.chat.id);
-            i.balance = i.referrals * 0.1;
-            try {
-              await ctx.telegram.sendMessage(
-                id,
-                "Referral orqali ro'yhatdan o'tganingiz bilan tabriklayman 🎉"
-              );
-            } catch (error) {
-              if (
-                error.code === 403 &&
-                error.description.includes("bot was blocked by the user")
-              ) {
-                console.log(`User ${ctx.from.id} blocked the bot.`);
-                // Optionally, remove the user from your database or take other actions
-              } else {
-                console.error("Failed to send message:", error);
-              }
+    // Hoziroq botga kiring 👉 ${referral}`,
+    //                 },
+    //               ],
+    //               [
+    //                 { text: "Pul yechish 💰", callback_data: "withdrawl" },
+    //                 {
+    //                   text: "Bosh menu 🏠",
+    //                   url: "https://t.me/Onedrop_uzbot?start=841886966",
+    //                 },
+    //               ],
+    //             ],
+    //           },
+    //         }
+    //       );
+    //     }
+    else if (ctx.callbackQuery.data == "start") {
+      if (payload == "hot") {
+        try {
+          await ctx.telegram.sendMessage(
+            ctx.chat.id,
+            "Near Hot loyihasining darsligini olish uchun bosing 👇",
+            {
+              reply_markup: {
+                inline_keyboard: [
+                  [{ text: "Near Hot Darslik", callback_data: "hot" }],
+                  [
+                    {
+                      text: "Botning boshqa funksiyalari",
+                      callback_data: "home",
+                    },
+                  ],
+                ],
+              },
             }
-            try {
-              await ctx.telegram.sendMessage(
-                payload,
-                `<b>${ctx.chat.username}</b> ushbu foydalanuvchi sizning referralingiz orqali ro'yhatdan o'tdi va siz 0.1 USDT ga ega bo'ldingiz. <b>Sizning balansingiz ${i.balance} USDT</b>`,
-                { parse_mode: "HTML" }
-              );
-            } catch (error) {
-              if (
-                error.code === 403 &&
-                error.description.includes("bot was blocked by the user")
-              ) {
-                console.log(`User ${ctx.from.id} blocked the bot.`);
-                // Optionally, remove the user from your database or take other actions
-              } else {
-                console.error("Failed to send message:", error);
-              }
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      } else if (payload == "catizen") {
+        try {
+          await ctx.telegram.sendMessage(
+            ctx.chat.id,
+            "Catizen loyihasining darsligini olish uchun bosing 👇",
+            {
+              reply_markup: {
+                inline_keyboard: [
+                  [{ text: "Catizen Darslik", callback_data: "catizen" }],
+                  [
+                    {
+                      text: "Botning boshqa funksiyalari",
+                      callback_data: "home",
+                    },
+                  ],
+                ],
+              },
             }
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      } else if (payload == "vertus") {
+        try {
+          await ctx.telegram.sendMessage(
+            ctx.chat.id,
+            "Vertus Wallet loyihasining darsligini olish uchun bosing 👇",
+            {
+              reply_markup: {
+                inline_keyboard: [
+                  [{ text: "Vertus Wallet Darslik", callback_data: "vertus" }],
+                  [
+                    {
+                      text: "Botning boshqa funksiyalari",
+                      callback_data: "home",
+                    },
+                  ],
+                ],
+              },
+            }
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      } else if (payload == "body") {
+        try {
+          await ctx.telegram.sendMessage(
+            ctx.chat.id,
+            "BodyPump loyihasining darsligini olish uchun bosing 👇",
+            {
+              reply_markup: {
+                inline_keyboard: [
+                  [{ text: "BodyPump Darslik", callback_data: "body" }],
+                  [
+                    {
+                      text: "Botning boshqa funksiyalari",
+                      callback_data: "home",
+                    },
+                  ],
+                ],
+              },
+            }
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        try {
+          await ctx.telegram.sendMessage(
+            id,
+            `Hurmatli <b>foydalanuvchi</b> , botimizga hush kelibsiz !
+    O'zingizga kerakli bo'limdan foydalanishingiz mumkin 👇
+        `,
+            {
+              parse_mode: "HTML",
+              reply_markup: {
+                inline_keyboard: [
+                  [
+                    {
+                      text: "Hamster Kombat sotish 💰",
+                      callback_data: "hamster-sell",
+                    },
+                  ],
+                  [
+                    {
+                      text: "Tapswap sotish 💰",
+                      callback_data: "notcoin-sell",
+                    },
+                  ],
+                  [
+                    {
+                      text: "Telegram Airdroplar 🏆",
+                      callback_data: "telegram-app",
+                    },
+                  ],
+                ],
+              },
+            }
+          );
+        } catch (error) {
+          if (
+            error.code === 403 &&
+            error.description.includes("bot was blocked by the user")
+          ) {
+            console.log(`User ${ctx.from.id} blocked the bot.`);
+            // Optionally, remove the user from your database or take other actions
+          } else {
+            console.error("Failed to send message:", error);
           }
-        });
-      }
-
-      //referral end
-      {
-        await ctx.telegram.sendMessage(
-          ctx.chat.id,
-
-          `Hurmatli <b>foydalanuvchi</b> , botimizga hush kelibsiz !
-              O'zingizga kerakli bo'limdan foydalanishingiz mumkin 👇
-                  `,
-          {
-            parse_mode: "HTML",
-            reply_markup: {
-              inline_keyboard: [
-                [
-                  {
-                    text: "Hamster Kombat sotish 💰",
-                    callback_data: "hamster-sell",
-                  },
-                ],
-                [
-                  {
-                    text: "Notcoin sotish 💰",
-                    callback_data: "notcoin-sell",
-                  },
-                ],
-                [
-                  {
-                    text: "Pul sarflamasdan crypto ishlash 💲",
-                    callback_data: "video-dars",
-                  },
-                ],
-              ],
-            },
-          }
-        );
+        }
       }
     } else if (ctx.callbackQuery.data == "penalty") {
       if (ctx.chat.id == admin) {
@@ -668,62 +820,64 @@ Ishlashda davom eting /referral`
           }
         );
       }
-    } else if (ctx.callbackQuery.data == "confirm") {
-      let balanceCount = 0;
-      let referralCount = 0;
-      users.forEach((i) => {
-        if (i.id == ctx.chat.id) {
-          balanceCount = i.balance;
-          referralCount = i.referrals;
-        }
-      });
-      ctx.telegram.sendMessage(
-        admin,
-        `
-<b>Yangi zayavka ⌚</b> 
+    }
+    // else if (ctx.callbackQuery.data == "confirm") {
+    //       let balanceCount = 0;
+    //       let referralCount = 0;
+    //       users.forEach((i) => {
+    //         if (i.id == ctx.chat.id) {
+    //           balanceCount = i.balance;
+    //           referralCount = i.referrals;
+    //         }
+    //       });
+    //       ctx.telegram.sendMessage(
+    //         admin,
+    //         `
+    // <b>Yangi zayavka ⌚</b>
 
-<b>id:</b> ${ctx.chat.id} 
-<b>user: </b> ${ctx.chat.username} 
-<b>miqdor: </b> ${balanceCount} USDT 
-<b>referallar soni: </b> ${referralCount} ta 
-<b>manzil: </b> ${ctx.callbackQuery.message.text.split(" ")[20]}     
-`,
-        {
-          parse_mode: "HTML",
-          reply_markup: {
-            inline_keyboard: [
-              [{ text: "To'landi ✅", callback_data: "paid" }],
-              [{ text: "Bekor qilish ❌", callback_data: "unpaid" }],
-              [{ text: "Jarima ⚠", callback_data: "penalty" }],
-            ],
-          },
-        }
-      );
-      users.forEach((i) => {
-        if (i.id == ctx.chat.id) {
-          i.balance = 0;
-          i.referrals = 0;
-        }
-      });
-      {
-        await ctx.telegram.sendMessage(
-          ctx.chat.id,
-          "Zayavkangiz muvaffaqiyatli adminga yuborildi. 24 soat ichida to'lov yuborilmasa adminga murojaat qiling. Admin: @m_odlov",
-          {
-            reply_markup: {
-              inline_keyboard: [
-                [
-                  {
-                    text: "Bosh menu 🏠",
-                    url: "https://t.me/Onedrop_uzbot?start=841886966",
-                  },
-                ],
-              ],
-            },
-          }
-        );
-      }
-    } else if (ctx.callbackQuery.data == "unpaid") {
+    // <b>id:</b> ${ctx.chat.id}
+    // <b>user: </b> ${ctx.chat.username}
+    // <b>miqdor: </b> ${balanceCount} USDT
+    // <b>referallar soni: </b> ${referralCount} ta
+    // <b>manzil: </b> ${ctx.callbackQuery.message.text.split(" ")[20]}
+    // `,
+    //         {
+    //           parse_mode: "HTML",
+    //           reply_markup: {
+    //             inline_keyboard: [
+    //               [{ text: "To'landi ✅", callback_data: "paid" }],
+    //               [{ text: "Bekor qilish ❌", callback_data: "unpaid" }],
+    //               [{ text: "Jarima ⚠", callback_data: "penalty" }],
+    //             ],
+    //           },
+    //         }
+    //       );
+    //       users.forEach((i) => {
+    //         if (i.id == ctx.chat.id) {
+    //           i.balance = 0;
+    //           i.referrals = 0;
+    //         }
+    //       });
+    //       {
+    //         await ctx.telegram.sendMessage(
+    //           ctx.chat.id,
+    //           "Zayavkangiz muvaffaqiyatli adminga yuborildi. 24 soat ichida to'lov yuborilmasa adminga murojaat qiling. Admin: @m_odlov",
+    //           {
+    //             reply_markup: {
+    //               inline_keyboard: [
+    //                 [
+    //                   {
+    //                     text: "Bosh menu 🏠",
+    //                     url: "https://t.me/Onedrop_uzbot?start=841886966",
+    //                   },
+    //                 ],
+    //               ],
+    //             },
+    //           }
+    //         );
+    //       }
+    //     }
+    else if (ctx.callbackQuery.data == "unpaid") {
       if (ctx.chat.id == admin) {
         await ctx.telegram.deleteMessage(
           ctx.chat.id,
@@ -764,25 +918,25 @@ Ishlashda davom eting /referral`
         if (ctx.chat.id == i.id) {
           let resultFriends = [];
           //start
-          i.friends.forEach(async (u) => {
-            const isMember = await isMemberFuncId(u, ctx);
-            if (!isMember) {
-              console.log("id");
-              i.referrals--;
-              i.balance = i.referrals * 0.1;
-              resultFriends = i.friends.filter((friend) => {
-                friend == u;
-              });
-              // end
-              await ctx.telegram.sendMessage(
-                ctx.chat.id,
-                `Sizning <b>${u} ID </b> referalingiz kanallardan chiqib ketgani uchun 0.1 USDT balansingizdan olib tashlandi ⚠
-Sizning hozirgi balansingiz ${i.balance}`,
-                { parse_mode: "HTML" }
-              );
-              i.friends = resultFriends;
-            }
-          });
+          //           i.friends.forEach(async (u) => {
+          //             const isMember = await isMemberFuncId(u, ctx);
+          //             if (!isMember) {
+          //               console.log("id");
+          //               i.referrals--;
+          //               i.balance = i.referrals * 0.1;
+          //               resultFriends = i.friends.filter((friend) => {
+          //                 friend == u;
+          //               });
+          //               // end
+          //               await ctx.telegram.sendMessage(
+          //                 ctx.chat.id,
+          //                 `Sizning <b>${u} ID </b> referalingiz kanallardan chiqib ketgani uchun 0.1 USDT balansingizdan olib tashlandi ⚠
+          // Sizning hozirgi balansingiz ${i.balance}`,
+          //                 { parse_mode: "HTML" }
+          //               );
+          //               // i.friends = resultFriends;
+          //             }
+          //           });
 
           const referrals = i.referrals;
           console.log(referrals);
@@ -848,38 +1002,32 @@ Ushbu ko'rinishda yuboring: /bep20 0x996bbd17516a6a8d5b6b08f8b929a610df775541
       ctx.callbackQuery.data !== "start" &&
       ctx.callbackQuery.data !== "withdrawl"
     ) {
-      if (
-        ctx.callbackQuery.message.text !==
+      await ctx.telegram.sendMessage(
+        ctx.chat.id,
         `Hurmatli <b>foydalanuvchi</b> , quyidagi kanalga obuna bo'lganingizdan so'ng botdan to'liq foydalanishingiz mumkin 👇
-      `
-      ) {
-        await ctx.telegram.sendMessage(
-          ctx.chat.id,
-          `Hurmatli <b>foydalanuvchi</b> , quyidagi kanalga obuna bo'lganingizdan so'ng botdan to'liq foydalanishingiz mumkin 👇
                         `,
-          {
-            parse_mode: "HTML",
-            reply_markup: {
-              inline_keyboard: [
-                [{ text: "1️⃣ Kanal 📢", url: chanLink }],
-                [
-                  {
-                    text: "2️⃣ Kanal 📢",
-                    url: chanLink1,
-                  },
-                ],
-                [
-                  {
-                    text: "3️⃣ Kanal 📢",
-                    url: chanLink2,
-                  },
-                ],
-                [{ text: "Tekshirish ✅", callback_data: "home" }],
+        {
+          parse_mode: "HTML",
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: "1️⃣ Kanal 📢", url: chanLink }],
+              [
+                {
+                  text: "2️⃣ Kanal 📢",
+                  url: chanLink1,
+                },
               ],
-            },
-          }
-        );
-      }
+              [
+                {
+                  text: "3️⃣ Kanal 📢",
+                  url: chanLink2,
+                },
+              ],
+              [{ text: "Tekshirish ✅", callback_data: "home" }],
+            ],
+          },
+        }
+      );
     } else {
       ctx.telegram.sendMessage(
         id,
@@ -912,52 +1060,52 @@ Ushbu ko'rinishda yuboring: /bep20 0x996bbd17516a6a8d5b6b08f8b929a610df775541
 });
 const generateReferralLink = (userId) =>
   `https://t.me/OneDrop_uzbot?start=${userId}`;
-bot.command("referral", async (ctx) => {
-  const referral = generateReferralLink(ctx.chat.id);
-  let referrals = 0;
-  await users.forEach((i) => {
-    if (i.id == ctx.chat.id) {
-      referrals = i.referrals;
-    }
-  });
-  ctx.replyWithPhoto(
-    { source: "onedrop.png" },
-    {
-      caption: `<b>Ushbu bot orqali do'stlaringizni botga taklif qilib kriptavalyuta (USDT) ishlashingiz mumkin.</b>
+// bot.command("referral", async (ctx) => {
+//   const referral = generateReferralLink(ctx.chat.id);
+//   let referrals = 0;
+//   await users.forEach((i) => {
+//     if (i.id == ctx.chat.id) {
+//       referrals = i.referrals;
+//     }
+//   });
+//   ctx.replyWithPhoto(
+//     { source: "onedrop.png" },
+//     {
+//       caption: `<b>Ushbu bot orqali do'stlaringizni botga taklif qilib kriptavalyuta (USDT) ishlashingiz mumkin.</b>
 
-Sizning referallaringiz soni: <b>${referrals} ta</b>
-Sizning balansingiz : <b>${referrals * 0.1} USDT</b>
+// Sizning referallaringiz soni: <b>${referrals} ta</b>
+// Sizning balansingiz : <b>${referrals * 0.1} USDT</b>
 
-Balansingiz ${minimal} usdt ga yetgandan pulingizni chiqarib olishingiz mumkin.
+// Balansingiz ${minimal} usdt ga yetgandan pulingizni chiqarib olishingiz mumkin.
 
-Sizning referral linkingiz 👇
-${referral}
-`,
-      parse_mode: "HTML",
-      reply_markup: {
-        inline_keyboard: [
-          [
-            {
-              text: "Yaqinlaringizga yuboring ✈",
-              url: `https://t.me/share/url?url=OneDrops Bot&text=
-💰 Ushbu bot orqali do'stlaringizni botga taklif qilib kriptavalyuta (USDT) ishlashingiz mumkin.
-🎮Bundan tashqari botda notcoin va hamster kombatga o'xshagan o'yinlarni tangalarni sotish o'rgatiladi.
+// Sizning referral linkingiz 👇
+// ${referral}
+// `,
+//       parse_mode: "HTML",
+//       reply_markup: {
+//         inline_keyboard: [
+//           [
+//             {
+//               text: "Yaqinlaringizga yuboring ✈",
+//               url: `https://t.me/share/url?url=OneDrops Bot&text=
+// 💰 Ushbu bot orqali do'stlaringizni botga taklif qilib kriptavalyuta (USDT) ishlashingiz mumkin.
+// 🎮Bundan tashqari botda notcoin , tapswap va hamster kombatga o'xshagan o'yinlarni tangalarni sotish o'rgatiladi.
 
-Hoziroq botga kiring 👉 ${referral}`,
-            },
-          ],
-          [
-            { text: "Pul yechish 💰", callback_data: "withdrawl" },
-            {
-              text: "Bosh menu 🏠",
-              url: "https://t.me/Onedrop_uzbot?start=841886966",
-            },
-          ],
-        ],
-      },
-    }
-  );
-});
+// Hoziroq botga kiring 👉 ${referral}`,
+//             },
+//           ],
+//           [
+//             { text: "Pul yechish 💰", callback_data: "withdrawl" },
+//             {
+//               text: "Bosh menu 🏠",
+//               url: "https://t.me/Onedrop_uzbot?start=841886966",
+//             },
+//           ],
+//         ],
+//       },
+//     }
+//   );
+// });
 
 bot.command("admin", (ctx) => {
   if (ctx.chat.id == admin) {
@@ -967,55 +1115,59 @@ bot.command("admin", (ctx) => {
         keyboard: [[{ text: "All users" }], [{ text: "Send Message" }]],
       },
     });
-    bot.hears("All users", async (msg) => {
-      msg.telegram.sendMessage(841886966, "Console logga yuborildi");
-      let count = users.length / 100;
-      for (let i = 0; i < count; i++) {
-        console.log(users.slice(i * 100, (i + 1) * 100));
-      }
-    });
+    // bot.hears("All users", async (msg) => {
+    //   msg.telegram.sendMessage(841886966, "Console logga yuborildi");
+    //   let count = users.length / 100;
+    //   for (let i = 0; i < count; i++) {
+    //     console.log(users.slice(i * 100, (i + 1) * 100));
+    //   }
+    // });
     let canSend = false;
     bot.hears("Send Message", async (contex) => {
-      contex.telegram.sendMessage(admin, "Enter message: ");
-      canSend = true;
-      let msgId = null;
-      bot.on("message", async (msg) => {
-        if (msg.message.text == "Ha ✅" && canSend) {
-          usersIds.forEach(async (i) => {
-            try {
-              await msg.telegram.forwardMessage(i, msg.chat.id, msgId);
-            } catch (error) {
-              if (
-                error.code === 403 &&
-                error.description.includes("bot was blocked by the user")
-              ) {
-                console.log(`User ${msg.from.id} blocked the bot.`);
-                // Optionally, remove the user from your database or take other actions
-              } else {
-                console.error("Failed to send message:", error);
+      if (contex.chat.id == admin) {
+        contex.telegram.sendMessage(admin, "Enter message: ");
+        canSend = true;
+        let msgId = null;
+        bot.on("message", async (msg) => {
+          if (msg.message.text == "Ha ✅" && canSend) {
+            usersIds.forEach(async (i) => {
+              try {
+                await msg.telegram.forwardMessage(i, msg.chat.id, msgId);
+              } catch (error) {
+                if (
+                  error.code === 403 &&
+                  error.description.includes("bot was blocked by the user")
+                ) {
+                  console.log(`User ${msg.from.id} blocked the bot.`);
+                  // Optionally, remove the user from your database or take other actions
+                } else {
+                  console.error("Failed to send message:", error);
+                }
+              }
+
+              sleep(2000);
+            });
+            canSend = false;
+          } else {
+            if (canSend) {
+              msgId = msg.message.message_id;
+              msg.telegram.sendMessage(
+                msg.chat.id,
+                "Barcha foydalanuvchilarga habar yuborilsinmi ?",
+                {
+                  reply_markup: { keyboard: [[{ text: "Ha ✅" }]] },
+                }
+              );
+            } else {
+              if (ctx.chat.id == admin) {
+                msg.telegram.sendMessage(msg.chat.id, "Bosh sahifa", {
+                  reply_markup: { keyboard: [[{ text: "/admin" }]] },
+                });
               }
             }
-
-            sleep(2000);
-          });
-          canSend = false;
-        } else {
-          if (canSend) {
-            msgId = msg.message.message_id;
-            msg.telegram.sendMessage(
-              msg.chat.id,
-              "Barcha foydalanuvchilarga habar yuborilsinmi ?",
-              {
-                reply_markup: { keyboard: [[{ text: "Ha ✅" }]] },
-              }
-            );
-          } else {
-            msg.telegram.sendMessage(msg.chat.id, "Bosh sahifa", {
-              reply_markup: { keyboard: [[{ text: "/admin" }]] },
-            });
           }
-        }
-      });
+        });
+      }
     });
   }
 });
@@ -1027,7 +1179,6 @@ bot.command("help", async (ctx) => {
       `
   /start - botni qayta ishga tushirish
   /help - botdagi buyruqlar 
-  /referral - botda pul ishlash
   /about - bot haqida 
   
     `
@@ -1045,15 +1196,15 @@ bot.command("help", async (ctx) => {
   }
 });
 
-bot.command("users", async (ctx) => {
-  if (ctx.chat.id == admin) {
-    ctx.telegram.sendMessage(841886966, "Console logga yuborildi");
-    let count = usersIds.length / 100;
-    for (let i = 0; i < count; i++) {
-      console.log(usersIds.slice(i * 100, (i + 1) * 100));
-    }
-  }
-});
+// bot.command("users", async (ctx) => {
+//   if (ctx.chat.id == admin) {
+//     ctx.telegram.sendMessage(841886966, "Console logga yuborildi");
+//     let count = usersIds.length / 100;
+//     for (let i = 0; i < count; i++) {
+//       console.log(usersIds.slice(i * 100, (i + 1) * 100));
+//     }
+//   }
+// });
 
 bot.command("changeminimal", (ctx) => {
   if (ctx.chat.id == admin) {
@@ -1089,6 +1240,70 @@ bot.command("channel2", (ctx) => {
   }
 });
 
+bot.command("videos", async (ctx) => {
+  try {
+    await ctx.replyWithVideo("https://t.me/k02isniwu2kjsi/6");
+  } catch (error) {
+    console.error("Failed to send message:", error);
+  }
+});
+
+bot.command("downIds", async (ctx) => {
+  if (ctx.chat.id == admin) {
+    try {
+      const response = await axios.get(apiBaseUrl2, {
+        headers: { Authorization: `Bearer ${apiCode}` },
+      });
+      const apiUsers = response.data.records;
+
+      if (apiUsers.length === 0) {
+        ctx.reply("No users found.");
+      } else {
+        usersIds = [];
+        apiUsers.forEach((u) => {
+          usersIds.push(Number(u.fields.id));
+        });
+
+        ctx.reply("Tayyor ✅");
+        // console.log(usersIds);
+        // console.log(response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      ctx.reply("Failed to fetch users. Please try again later.");
+    }
+  }
+});
+
+// bot.command("downUsers", async (ctx) => {
+//   try {
+//     const response = await axios.get(apiBaseUrl, {
+//       headers: { Authorization: `Bearer ${apiCode}` },
+//     });
+//     const apiUsers = response.data.records;
+
+//     if (apiUsers.length === 0) {
+//       ctx.reply("No users found.");
+//     } else {
+//       users = [];
+//       apiUsers.forEach((user) => {
+//         users.push({
+//           id: user.fields.id,
+//           friends: user.fields.friends,
+//           balance: user.fields.balance,
+//           referrals: user.fields.referrals,
+//         });
+//       });
+
+//       ctx.reply("Userlar royhati yuklandi ✅");
+//       console.log(users);
+//     }
+//   } catch (error) {
+//     console.error("Error fetching users:", error);
+//     ctx.reply("Failed to fetch users. Please try again later.");
+//   }
+// });
+
 bot.command("about", (ctx) => {
   ctx.telegram.sendMessage(
     ctx.chat.id,
@@ -1104,3 +1319,9 @@ bot.command("about", (ctx) => {
 });
 
 bot.launch();
+const userData = {
+  fields: {
+    id: "New User", // You can dynamically get this from user input
+    balance: "newuser@example.com",
+  },
+};
