@@ -1274,7 +1274,7 @@ bot.command("downIds", async (ctx) => {
         console.log("No records found.");
       } else {
         const apiUsers = records;
-        console.log(records.length);
+        usersIds = [];
         apiUsers.forEach((u) => {
           usersIds.push(Number(u.fields.id));
         });
