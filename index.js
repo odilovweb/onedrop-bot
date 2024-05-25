@@ -1261,9 +1261,12 @@ bot.command("downIds", async (ctx) => {
       } else {
         usersIds = [];
         const count = apiUsers.length / 100;
+        console.log(count);
+        console.log(apiUsers);
         for (let i = 0; i < count; i++) {
           apiUsers.slice(i, i + 1).forEach((u) => {
             usersIds.push(Number(u.fields.id));
+            console.log(u);
           });
         }
 
