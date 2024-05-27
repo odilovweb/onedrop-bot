@@ -112,20 +112,20 @@ bot.start(async (ctx) => {
         },
       };
 
-      // try {
-      //   const response = await axios.post(apiBaseUrl2, userData, {
-      //     headers: {
-      //       Authorization: `Bearer ${apiCode}`,
-      //       "Content-Type": "application/json",
-      //     },
-      //   });
+      try {
+        const response = await axios.post(apiBaseUrl2, userData, {
+          headers: {
+            Authorization: `Bearer ${apiCode}`,
+            "Content-Type": "application/json",
+          },
+        });
 
-      //   usersIds.push(ctx.chat.id);
-      //   console.log("User added");
-      // } catch (error) {
-      //   console.error("Error adding user:", error);
-      //   ctx.reply("Failed to add user. Please try again later.");
-      // }
+        usersIds.push(ctx.chat.id);
+        console.log("User added");
+      } catch (error) {
+        console.error("Error adding user:", error);
+        ctx.reply("Failed to add user. Please try again later.");
+      }
     }
   }
 
