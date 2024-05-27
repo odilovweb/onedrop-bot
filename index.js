@@ -1266,25 +1266,25 @@ const fetchAllRecords = async () => {
   return records;
 };
 
-bot.command("downIds", async (ctx) => {
-  if (ctx.chat.id == admin) {
-    try {
-      const records = await fetchAllRecords();
-      if (records.length === 0) {
-        console.log("No records found.");
-      } else {
-        const apiUsers = records;
-        usersIds = [];
-        apiUsers.forEach((u) => {
-          usersIds.push(Number(u.fields.id));
-        });
-        ctx.reply("Tayyor ✅");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-});
+// bot.command("downIds", async (ctx) => {
+//   if (ctx.chat.id == admin) {
+//     try {
+//       const records = await fetchAllRecords();
+//       if (records.length === 0) {
+//         console.log("No records found.");
+//       } else {
+//         const apiUsers = records;
+//         usersIds = [];
+//         apiUsers.forEach((u) => {
+//           usersIds.push(Number(u.fields.id));
+//         });
+//         ctx.reply("Tayyor ✅");
+//       }
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   }
+// });
 
 // bot.command("downUsers", async (ctx) => {
 //   try {
