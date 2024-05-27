@@ -1177,9 +1177,9 @@ bot.command("help", async (ctx) => {
     await ctx.telegram.sendMessage(
       ctx.chat.id,
       `
-  /start - botni qayta ishga tushirish
-  /help - botdagi buyruqlar 
-  /about - bot haqida 
+/start - botni qayta ishga tushirish
+/help - botdagi buyruqlar 
+/about - bot haqida 
   
     `
     );
@@ -1316,17 +1316,21 @@ bot.command("downIds", async (ctx) => {
 // });
 
 bot.command("about", (ctx) => {
-  ctx.telegram.sendMessage(
-    ctx.chat.id,
-    `
-<b>📈Bot statistikasi:</b> ${usersIds.length} ta a'zo bor
-
-<b>🤝Reklama bo'yicha:</b> @OneDrop_admin
-
-<b>👨‍💻Dasturchi:</b> @m_odlov
-`,
-    { parse_mode: "HTML" }
-  );
+  try {
+    ctx.telegram.sendMessage(
+      ctx.chat.id,
+      `
+  <b>📈Bot statistikasi:</b> ${usersIds.length} ta a'zo bor
+  
+  <b>🤝Reklama bo'yicha:</b> @OneDrop_admin
+  
+  <b>👨‍💻Dasturchi:</b> @m_odlov
+  `,
+      { parse_mode: "HTML" }
+    );
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 bot.launch();
