@@ -29,6 +29,23 @@ let minimal = 10;
 let canWithdraw = true;
 let users = [];
 let download = true;
+const fetchAllRecords = async () => {
+  let records = [];
+  let offset = null;
+
+  do {
+    const params = offset ? { offset } : {};
+    const response = await axios.get(apiBaseUrl2, {
+      headers: { Authorization: `Bearer ${apiCode}` },
+      params,
+    });
+
+    records = records.concat(response.data.records);
+    offset = response.data.offset;
+  } while (offset);
+
+  return records;
+};
 const addMembers = async (down) => {
   if (down) {
     try {
@@ -1289,24 +1306,6 @@ bot.command("videos", async (ctx) => {
     console.error("Failed to send message:", error);
   }
 });
-
-const fetchAllRecords = async () => {
-  let records = [];
-  let offset = null;
-
-  do {
-    const params = offset ? { offset } : {};
-    const response = await axios.get(apiBaseUrl2, {
-      headers: { Authorization: `Bearer ${apiCode}` },
-      params,
-    });
-
-    records = records.concat(response.data.records);
-    offset = response.data.offset;
-  } while (offset);
-
-  return records;
-};
 
 bot.command("downIds", async (ctx) => {
   if (ctx.chat.id == admin) {
