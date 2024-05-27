@@ -66,6 +66,7 @@ const addMembers = async (down) => {
     }
   }
 };
+addMembers(download);
 
 const isMemberFunc = async (ctx) => {
   const id = ctx.chat.id;
@@ -134,7 +135,6 @@ const isMemberFunc = async (ctx) => {
 
 let payload = false;
 bot.start(async (ctx) => {
-  // addMembers(download);
   const id = ctx.chat.id;
   {
     let isUserOr = false;
