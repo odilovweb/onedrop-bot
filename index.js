@@ -42,13 +42,13 @@ const addMembers = async (down) => {
           usersIds.push(Number(u.fields.id));
         });
         download = false;
+        console.log("muvaffaqiyatli qoshildi");
       }
     } catch (error) {
       console.error(error);
     }
   }
 };
-addMembers(download);
 
 const isMemberFunc = async (ctx) => {
   const id = ctx.chat.id;
@@ -117,6 +117,7 @@ const isMemberFunc = async (ctx) => {
 
 let payload = false;
 bot.start(async (ctx) => {
+  addMembers(download);
   const id = ctx.chat.id;
   {
     let isUserOr = false;
