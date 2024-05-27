@@ -1002,59 +1002,67 @@ Ushbu ko'rinishda yuboring: /bep20 0x996bbd17516a6a8d5b6b08f8b929a610df775541
       ctx.callbackQuery.data !== "start" &&
       ctx.callbackQuery.data !== "withdrawl"
     ) {
-      await ctx.telegram.sendMessage(
-        ctx.chat.id,
-        `Hurmatli <b>foydalanuvchi</b> , quyidagi kanalga obuna bo'lganingizdan so'ng botdan to'liq foydalanishingiz mumkin 👇
+      try {
+        await ctx.telegram.sendMessage(
+          ctx.chat.id,
+          `Hurmatli <b>foydalanuvchi</b> , quyidagi kanalga obuna bo'lganingizdan so'ng botdan to'liq foydalanishingiz mumkin 👇
                         `,
-        {
-          parse_mode: "HTML",
-          reply_markup: {
-            inline_keyboard: [
-              [{ text: "1️⃣ Kanal 📢", url: chanLink }],
-              [
-                {
-                  text: "2️⃣ Kanal 📢",
-                  url: chanLink1,
-                },
+          {
+            parse_mode: "HTML",
+            reply_markup: {
+              inline_keyboard: [
+                [{ text: "1️⃣ Kanal 📢", url: chanLink }],
+                [
+                  {
+                    text: "2️⃣ Kanal 📢",
+                    url: chanLink1,
+                  },
+                ],
+                [
+                  {
+                    text: "3️⃣ Kanal 📢",
+                    url: chanLink2,
+                  },
+                ],
+                [{ text: "Tekshirish ✅", callback_data: "home" }],
               ],
-              [
-                {
-                  text: "3️⃣ Kanal 📢",
-                  url: chanLink2,
-                },
-              ],
-              [{ text: "Tekshirish ✅", callback_data: "home" }],
-            ],
-          },
-        }
-      );
+            },
+          }
+        );
+      } catch (e) {
+        console.log(e);
+      }
     } else {
-      ctx.telegram.sendMessage(
-        id,
-        `Hurmatli <b>foydalanuvchi</b> , quyidagi kanalga obuna bo'lganingizdan so'ng botdan to'liq foydalanishingiz mumkin 👇
+      try {
+        await ctx.telegram.sendMessage(
+          id,
+          `Hurmatli <b>foydalanuvchi</b> , quyidagi kanalga obuna bo'lganingizdan so'ng botdan to'liq foydalanishingiz mumkin 👇
         `,
-        {
-          parse_mode: "HTML",
-          reply_markup: {
-            inline_keyboard: [
-              [{ text: "1️⃣ Kanal 📢", url: chanLink }],
-              [
-                {
-                  text: "2️⃣ Kanal 📢",
-                  url: chanLink1,
-                },
+          {
+            parse_mode: "HTML",
+            reply_markup: {
+              inline_keyboard: [
+                [{ text: "1️⃣ Kanal 📢", url: chanLink }],
+                [
+                  {
+                    text: "2️⃣ Kanal 📢",
+                    url: chanLink1,
+                  },
+                ],
+                [
+                  {
+                    text: "3️⃣ Kanal 📢",
+                    url: chanLink2,
+                  },
+                ],
+                [{ text: "Tekshirish ✅", callback_data: "start" }],
               ],
-              [
-                {
-                  text: "3️⃣ Kanal 📢",
-                  url: chanLink2,
-                },
-              ],
-              [{ text: "Tekshirish ✅", callback_data: "start" }],
-            ],
-          },
-        }
-      );
+            },
+          }
+        );
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
 });
@@ -1147,6 +1155,14 @@ bot.command("admin", (ctx) => {
 
               sleep(2000);
             });
+            try {
+              await msg.telegram.sendMessage(
+                ctx.chat.id,
+                "Hammaga yuborildi !"
+              );
+            } catch (e) {
+              console.log(e);
+            }
             canSend = false;
           } else {
             if (canSend) {
