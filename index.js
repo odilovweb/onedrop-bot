@@ -29,23 +29,26 @@ let minimal = 10;
 let canWithdraw = true;
 let users = [];
 let download = true;
-if (download) {
-  try {
-    const records = await fetchAllRecords();
-    if (records.length === 0) {
-      console.log("No records found.");
-    } else {
-      const apiUsers = records;
-      usersIds = [];
-      apiUsers.forEach((u) => {
-        usersIds.push(Number(u.fields.id));
-      });
-      download = false;
+const addMembers = async (down) => {
+  if (down) {
+    try {
+      const records = await fetchAllRecords();
+      if (records.length === 0) {
+        console.log("No records found.");
+      } else {
+        const apiUsers = records;
+        usersIds = [];
+        apiUsers.forEach((u) => {
+          usersIds.push(Number(u.fields.id));
+        });
+        download = false;
+      }
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
   }
-}
+};
+addMembers(download);
 
 const isMemberFunc = async (ctx) => {
   const id = ctx.chat.id;
