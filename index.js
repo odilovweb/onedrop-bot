@@ -1315,9 +1315,9 @@ bot.command("downIds", async (ctx) => {
 //   }
 // });
 
-bot.command("about", (ctx) => {
+bot.command("about", async (ctx) => {
   try {
-    ctx.telegram.sendMessage(
+    await ctx.telegram.sendMessage(
       ctx.chat.id,
       `
   <b>📈Bot statistikasi:</b> ${usersIds.length} ta a'zo bor
@@ -1328,8 +1328,16 @@ bot.command("about", (ctx) => {
   `,
       { parse_mode: "HTML" }
     );
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    if (
+      error.code === 403 &&
+      error.description.includes("bot was blocked by the user")
+    ) {
+      console.log(`User ${ctx.from.id} blocked the bot.`);
+      // Optionally, remove the user from your database or take other actions
+    } else {
+      console.error("Failed to send message:", error);
+    }
   }
 });
 
