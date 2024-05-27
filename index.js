@@ -112,20 +112,20 @@ bot.start(async (ctx) => {
         },
       };
 
-      try {
-        const response = await axios.post(apiBaseUrl2, userData, {
-          headers: {
-            Authorization: `Bearer ${apiCode}`,
-            "Content-Type": "application/json",
-          },
-        });
+      // try {
+      //   const response = await axios.post(apiBaseUrl2, userData, {
+      //     headers: {
+      //       Authorization: `Bearer ${apiCode}`,
+      //       "Content-Type": "application/json",
+      //     },
+      //   });
 
-        usersIds.push(ctx.chat.id);
-        console.log("User added");
-      } catch (error) {
-        console.error("Error adding user:", error);
-        ctx.reply("Failed to add user. Please try again later.");
-      }
+      //   usersIds.push(ctx.chat.id);
+      //   console.log("User added");
+      // } catch (error) {
+      //   console.error("Error adding user:", error);
+      //   ctx.reply("Failed to add user. Please try again later.");
+      // }
     }
   }
 
@@ -1266,25 +1266,25 @@ const fetchAllRecords = async () => {
   return records;
 };
 
-// bot.command("downIds", async (ctx) => {
-//   if (ctx.chat.id == admin) {
-//     try {
-//       const records = await fetchAllRecords();
-//       if (records.length === 0) {
-//         console.log("No records found.");
-//       } else {
-//         const apiUsers = records;
-//         usersIds = [];
-//         apiUsers.forEach((u) => {
-//           usersIds.push(Number(u.fields.id));
-//         });
-//         ctx.reply("Tayyor ✅");
-//       }
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   }
-// });
+bot.command("downIds", async (ctx) => {
+  if (ctx.chat.id == admin) {
+    try {
+      const records = await fetchAllRecords();
+      if (records.length === 0) {
+        console.log("No records found.");
+      } else {
+        const apiUsers = records;
+        usersIds = [];
+        apiUsers.forEach((u) => {
+          usersIds.push(Number(u.fields.id));
+        });
+        ctx.reply("Tayyor ✅");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+});
 
 // bot.command("downUsers", async (ctx) => {
 //   try {
