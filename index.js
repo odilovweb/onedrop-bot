@@ -134,7 +134,7 @@ const isMemberFunc = async (ctx) => {
 
 let payload = false;
 bot.start(async (ctx) => {
-  addMembers(download);
+  // addMembers(download);
   const id = ctx.chat.id;
   {
     let isUserOr = false;
