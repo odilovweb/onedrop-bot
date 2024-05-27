@@ -329,37 +329,41 @@ bot.on("callback_query", async (ctx) => {
   if (isMember) {
     if (ctx.callbackQuery.data == "home") {
       {
-        await ctx.telegram.sendMessage(
-          ctx.chat.id,
-          `Hurmatli <b>foydalanuvchi</b> , botimizdan bemalol foydalanishingiz mumkin !
-      O'zingizga kerakli bo'limni tanlang 👇
-          `,
-          {
-            parse_mode: "HTML",
-            reply_markup: {
-              inline_keyboard: [
-                [
-                  {
-                    text: "Hamster Kombat sotish 💰",
-                    callback_data: "hamster-sell",
-                  },
+        try {
+          await ctx.telegram.sendMessage(
+            ctx.chat.id,
+            `Hurmatli <b>foydalanuvchi</b> , botimizdan bemalol foydalanishingiz mumkin !
+        O'zingizga kerakli bo'limni tanlang 👇
+            `,
+            {
+              parse_mode: "HTML",
+              reply_markup: {
+                inline_keyboard: [
+                  [
+                    {
+                      text: "Hamster Kombat sotish 💰",
+                      callback_data: "hamster-sell",
+                    },
+                  ],
+                  [
+                    {
+                      text: "Tapswap sotish 💰",
+                      callback_data: "notcoin-sell",
+                    },
+                  ],
+                  [
+                    {
+                      text: "Telegram Airdroplar 🏆",
+                      callback_data: "telegram-app",
+                    },
+                  ],
                 ],
-                [
-                  {
-                    text: "Tapswap sotish 💰",
-                    callback_data: "notcoin-sell",
-                  },
-                ],
-                [
-                  {
-                    text: "Telegram Airdroplar 🏆",
-                    callback_data: "telegram-app",
-                  },
-                ],
-              ],
-            },
-          }
-        );
+              },
+            }
+          );
+        } catch (e) {
+          console.log(e);
+        }
       }
     } else if (ctx.callbackQuery.data == "telegram-app") {
       try {
