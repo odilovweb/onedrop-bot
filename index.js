@@ -11,7 +11,7 @@ function sleep(ms) {
 let usersIds = [];
 
 const apiBaseUrl =
-  "https://api.airtable.com/v0/app3A2MZlE8zw9wjM/tblsfUh1SNk2ZvHQU";
+  "https://api.airtable.com/v0/app3A2MZlE8zw9wjM/tblrmZNiJZlQOacQW";
 const apiBaseUrl2 =
   "https://api.airtable.com/v0/app3A2MZlE8zw9wjM/tblue5zeLDqj87zEw";
 const admin = "841886966";
@@ -46,10 +46,28 @@ const fetchAllRecords = async () => {
 
   return records;
 };
+const fetchAllRecords2 = async () => {
+  let records = [];
+  let offset = null;
+
+  do {
+    const params = offset ? { offset } : {};
+    const response = await axios.get(apiBaseUrl, {
+      headers: { Authorization: `Bearer ${apiCode}` },
+      params,
+    });
+
+    records = records.concat(response.data.records);
+    offset = response.data.offset;
+  } while (offset);
+
+  return records;
+};
 const addMembers = async (down) => {
   if (down) {
     try {
-      const records = await fetchAllRecords();
+      let records = await fetchAllRecords();
+      records += await fetchAllRecords2();
       if (records.length === 0) {
         console.log("No records found.");
       } else {
@@ -152,7 +170,7 @@ bot.start(async (ctx) => {
       };
 
       try {
-        const response = await axios.post(apiBaseUrl2, userData, {
+        const response = await axios.post(apiBaseUrl, userData, {
           headers: {
             Authorization: `Bearer ${apiCode}`,
             "Content-Type": "application/json",
