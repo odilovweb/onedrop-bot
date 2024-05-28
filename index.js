@@ -30,6 +30,7 @@ let canWithdraw = true;
 let users = [];
 let download = true;
 const fetchAllRecords = async () => {
+  console.log("boshlandi");
   let records = [];
   let offset = null;
 
@@ -47,6 +48,7 @@ const fetchAllRecords = async () => {
   return records;
 };
 const fetchAllRecords2 = async () => {
+  console.log("boshlandi 2");
   let records = [];
   let offset = null;
 
@@ -66,14 +68,18 @@ const fetchAllRecords2 = async () => {
 const addMembers = async (down) => {
   if (down) {
     try {
-      let records = await fetchAllRecords();
-      records += await fetchAllRecords2();
+      console.log("started");
+      const records = await fetchAllRecords();
+      const records2 = await fetchAllRecords2();
       if (records.length === 0) {
         console.log("No records found.");
       } else {
         const apiUsers = records;
         usersIds = [];
         apiUsers.forEach((u) => {
+          usersIds.push(Number(u.fields.id));
+        });
+        records2.forEach((u) => {
           usersIds.push(Number(u.fields.id));
         });
         download = false;
