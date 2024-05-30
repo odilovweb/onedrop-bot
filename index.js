@@ -14,6 +14,9 @@ const apiBaseUrl =
   "https://api.airtable.com/v0/app3A2MZlE8zw9wjM/tblrmZNiJZlQOacQW";
 const apiBaseUrl2 =
   "https://api.airtable.com/v0/app3A2MZlE8zw9wjM/tblue5zeLDqj87zEw";
+const apiBaseUrl3 =
+  "https://api.airtable.com/v0/app3A2MZlE8zw9wjM/tblaz1fOFhDFVN6tN";
+
 const admin = "841886966";
 
 let channel = "2018020256";
@@ -29,6 +32,7 @@ let minimal = 10;
 let canWithdraw = true;
 let users = [];
 let download = true;
+
 const fetchAllRecords = async () => {
   console.log("boshlandi");
   let records = [];
@@ -47,6 +51,7 @@ const fetchAllRecords = async () => {
 
   return records;
 };
+
 const fetchAllRecords2 = async () => {
   console.log("boshlandi 2");
   let records = [];
@@ -65,12 +70,33 @@ const fetchAllRecords2 = async () => {
 
   return records;
 };
+
+const fetchAllRecords3 = async () => {
+  console.log("boshlandi 2");
+  let records = [];
+  let offset = null;
+
+  do {
+    const params = offset ? { offset } : {};
+    const response = await axios.get(apiBaseUrl3, {
+      headers: { Authorization: `Bearer ${apiCode}` },
+      params,
+    });
+
+    records = records.concat(response.data.records);
+    offset = response.data.offset;
+  } while (offset);
+
+  return records;
+};
 const addMembers = async (down) => {
   if (down) {
     try {
       console.log("started");
       const records = await fetchAllRecords();
       const records2 = await fetchAllRecords2();
+      const records3 = await fetchAllRecords3();
+
       if (records.length === 0) {
         console.log("No records found.");
       } else {
@@ -80,6 +106,9 @@ const addMembers = async (down) => {
           usersIds.push(Number(u.fields.id));
         });
         records2.forEach((u) => {
+          usersIds.push(Number(u.fields.id));
+        });
+        records3.forEach((u) => {
           usersIds.push(Number(u.fields.id));
         });
         download = false;
@@ -176,7 +205,7 @@ bot.start(async (ctx) => {
       };
 
       try {
-        const response = await axios.post(apiBaseUrl, userData, {
+        const response = await axios.post(apiBaseUrl3, userData, {
           headers: {
             Authorization: `Bearer ${apiCode}`,
             "Content-Type": "application/json",
@@ -1205,9 +1234,16 @@ bot.command("admin", (ctx) => {
         let msgId = null;
         bot.on("message", async (msg) => {
           if (msg.message.text == "Ha ✅" && canSend) {
+            let count = 0;
+            try {
+              await msg.telegram.sendMessage(ctx.chat.id, "Boshlandi");
+            } catch (e) {
+              console.log(e);
+            }
             usersIds.forEach(async (i) => {
               try {
                 await msg.telegram.forwardMessage(i, msg.chat.id, msgId);
+                count++;
               } catch (error) {
                 if (
                   error.code === 403 &&
@@ -1220,12 +1256,12 @@ bot.command("admin", (ctx) => {
                 }
               }
 
-              sleep(2000);
+              sleep(300);
             });
             try {
               await msg.telegram.sendMessage(
                 ctx.chat.id,
-                "Hammaga yuborildi !"
+                `Hammaga yuborildi ! Jami ${count} ta odamga yuborildi `
               );
             } catch (e) {
               console.log(e);
