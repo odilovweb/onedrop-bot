@@ -613,7 +613,7 @@ Hoziroq botga kiring 👉 https://t.me/OneDrop_uzbot?start=hot`,
             ctx.chat.id,
             `<b>Tapswap sotish uchun ushbu kanalga a'zo bo'lishingiz kerak 👇</b> 
     
-    👉 https://t.me/+LzI6C5bOHCdhNzQ6`,
+    👉 https://t.me/+gfEcr9XF2aRiYWYy`,
             {
               parse_mode: "HTML",
               reply_markup: {
@@ -634,7 +634,7 @@ Hoziroq botga kiring 👉 https://t.me/OneDrop_uzbot?start=hot`,
 
           `<b>Hamster Kombat sotish uchun ushbu kanalga a'zo bo'lishingiz kerak 👇</b> 
   
-  👉 https://t.me/+ACMH1IaKGek0M2Vi`,
+  👉 https://t.me/+I4hFWxNmNNNjMWRi`,
           {
             parse_mode: "HTML",
             reply_markup: {
