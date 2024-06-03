@@ -99,7 +99,7 @@ const fetchAllRecords4 = async () => {
 
   do {
     const params = offset ? { offset } : {};
-    const response = await axios.get(apiBaseUrl3, {
+    const response = await axios.get(apiBaseUrl4, {
       headers: { Authorization: `Bearer ${apiCode}` },
       params,
     });
