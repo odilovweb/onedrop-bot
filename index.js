@@ -16,6 +16,8 @@ const apiBaseUrl2 =
   "https://api.airtable.com/v0/app3A2MZlE8zw9wjM/tblue5zeLDqj87zEw";
 const apiBaseUrl3 =
   "https://api.airtable.com/v0/app3A2MZlE8zw9wjM/tblaz1fOFhDFVN6tN";
+const apiBaseUrl4 =
+  "https://api.airtable.com/v0/app3A2MZlE8zw9wjM/tbliPLUCAcECSAmQa";
 
 const admin = "841886966";
 
@@ -89,6 +91,26 @@ const fetchAllRecords3 = async () => {
 
   return records;
 };
+
+const fetchAllRecords4 = async () => {
+  console.log("boshlandi 2");
+  let records = [];
+  let offset = null;
+
+  do {
+    const params = offset ? { offset } : {};
+    const response = await axios.get(apiBaseUrl3, {
+      headers: { Authorization: `Bearer ${apiCode}` },
+      params,
+    });
+
+    records = records.concat(response.data.records);
+    offset = response.data.offset;
+  } while (offset);
+
+  return records;
+};
+
 const addMembers = async (down) => {
   if (down) {
     try {
@@ -96,6 +118,7 @@ const addMembers = async (down) => {
       const records = await fetchAllRecords();
       const records2 = await fetchAllRecords2();
       const records3 = await fetchAllRecords3();
+      const records4 = await fetchAllRecords4();
 
       if (records.length === 0) {
         console.log("No records found.");
@@ -109,6 +132,9 @@ const addMembers = async (down) => {
           usersIds.push(Number(u.fields.id));
         });
         records3.forEach((u) => {
+          usersIds.push(Number(u.fields.id));
+        });
+        records4.forEach((u) => {
           usersIds.push(Number(u.fields.id));
         });
         download = false;
@@ -205,7 +231,7 @@ bot.start(async (ctx) => {
       };
 
       try {
-        const response = await axios.post(apiBaseUrl3, userData, {
+        const response = await axios.post(apiBaseUrl4, userData, {
           headers: {
             Authorization: `Bearer ${apiCode}`,
             "Content-Type": "application/json",
