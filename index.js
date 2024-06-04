@@ -9,7 +9,7 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 let usersIds = [];
-
+let comboLink = "https://t.me/k02isniwu2kjsi/13";
 const apiBaseUrl =
   "https://api.airtable.com/v0/app3A2MZlE8zw9wjM/tblrmZNiJZlQOacQW";
 const apiBaseUrl2 =
@@ -283,6 +283,21 @@ bot.start(async (ctx) => {
       } catch (error) {
         console.log(error);
       }
+    } else if (payload == "combo") {
+      try {
+        ctx.replyWithPhoto(comboLink, {
+          caption: `Bugungi Hamster Kombo 🔥
+
+Yaqinlarga ham ulashing 😉✈️`,
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: "Boshqa bo'limlar 🔙", callback_data: "home" }],
+            ],
+          },
+        });
+      } catch (e) {
+        console.log(e);
+      }
     } else if (payload == "catizen") {
       try {
         await ctx.telegram.sendMessage(
@@ -360,6 +375,12 @@ bot.start(async (ctx) => {
             parse_mode: "HTML",
             reply_markup: {
               inline_keyboard: [
+                [
+                  {
+                    text: "Hamster Daily Combo 🏆",
+                    callback_data: "hamster-combo",
+                  },
+                ],
                 [
                   {
                     text: "Hamster Kombat sotish 💰",
@@ -457,6 +478,12 @@ bot.on("callback_query", async (ctx) => {
               parse_mode: "HTML",
               reply_markup: {
                 inline_keyboard: [
+                  [
+                    {
+                      text: "Hamster Daily Combo 🏆",
+                      callback_data: "hamster-combo",
+                    },
+                  ],
                   [
                     {
                       text: "Hamster Kombat sotish 💰",
@@ -653,23 +680,49 @@ Hoziroq botga kiring 👉 https://t.me/OneDrop_uzbot?start=hot`,
           console.log(error);
         }
       }
-    } else if (ctx.callbackQuery.data == "hamster-sell") {
-      {
-        await ctx.telegram.sendMessage(
-          ctx.chat.id,
+    } else if (ctx.callbackQuery.data == "hamster-combo") {
+      try {
+        ctx.replyWithPhoto(comboLink, {
+          caption: `Bugungi Hamster Kombo 🔥
 
-          `<b>Hamster Kombat sotish uchun ushbu kanalga a'zo bo'lishingiz kerak 👇</b> 
+Yaqinlarga ham ulashing 😉✈️`,
+          reply_markup: {
+            inline_keyboard: [
+              [
+                {
+                  text: "Yaqinlaringizga ulashing ✈",
+                  url: `https://t.me/share/url?url=https://t.me/OneDrop_uzbot?start=combo&text=
+Hamster Comboni bilish uchun ushbu linkka kiring 👆`,
+                },
+              ],
+              [{ text: "Orqaga 🔙", callback_data: "home" }],
+            ],
+          },
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    } else if (ctx.callbackQuery.data == "hamster-sell") {
+      try {
+        {
+          await ctx.telegram.sendMessage(
+            ctx.chat.id,
+
+            `<b>Hamster Kombat sotish uchun ushbu kanalga a'zo bo'lishingiz kerak 👇</b> 
   
   👉 https://t.me/+I4hFWxNmNNNjMWRi`,
-          {
-            parse_mode: "HTML",
-            reply_markup: {
-              inline_keyboard: [
-                [{ text: "Ortga qaytish 🔙", callback_data: "home" }],
-              ],
-            },
-          }
-        );
+            {
+              parse_mode: "HTML",
+              reply_markup: {
+                inline_keyboard: [
+                  [{ text: "Ortga qaytish 🔙", callback_data: "home" }],
+                ],
+              },
+            }
+          );
+        }
+      } catch (e) {
+        console.log(e);
       }
     } else if (ctx.callbackQuery.data == "video-dars") {
       {
@@ -775,6 +828,21 @@ Hoziroq botga kiring 👉 https://t.me/OneDrop_uzbot?start=hot`,
         } catch (error) {
           console.log(error);
         }
+      } else if (payload == "combo") {
+        try {
+          ctx.replyWithPhoto(comboLink, {
+            caption: `Bugungi Hamster Kombo 🔥
+  
+  Yaqinlarga ham ulashing 😉✈️`,
+            reply_markup: {
+              inline_keyboard: [
+                [{ text: "Boshqa bo'limlar 🔙", callback_data: "home" }],
+              ],
+            },
+          });
+        } catch (e) {
+          console.log(e);
+        }
       } else if (payload == "catizen") {
         try {
           await ctx.telegram.sendMessage(
@@ -854,10 +922,17 @@ Hoziroq botga kiring 👉 https://t.me/OneDrop_uzbot?start=hot`,
                 inline_keyboard: [
                   [
                     {
+                      text: "Hamster Daily Combo 🏆",
+                      callback_data: "hamster-combo",
+                    },
+                  ],
+                  [
+                    {
                       text: "Hamster Kombat sotish 💰",
                       callback_data: "hamster-sell",
                     },
                   ],
+
                   [
                     {
                       text: "Tapswap sotish 💰",
@@ -1465,6 +1540,12 @@ bot.command("about", async (ctx) => {
     } else {
       console.error("Failed to send message:", error);
     }
+  }
+});
+bot.command("changeCombo", (ctx) => {
+  if (ctx.chat.id == admin) {
+    comboLink = ctx.message.text.split(" ")[1];
+    ctx.reply("Combo muvaffaqiyatli o'zgartiirildi");
   }
 });
 
