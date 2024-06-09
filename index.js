@@ -1523,8 +1523,6 @@ bot.command("about", async (ctx) => {
     await ctx.telegram.sendMessage(
       ctx.chat.id,
       `
-  <b>📈Bot statistikasi:</b> ${usersIds.length} ta a'zo bor
-  
   <b>🤝Reklama bo'yicha:</b> @OneDrop_admin
   
   <b>👨‍💻Dasturchi:</b> @m_odlov
