@@ -33,6 +33,7 @@ const zayavka = "1882547088";
 let minimal = 10;
 let canWithdraw = true;
 let users = [];
+let usersMibu = [];
 let download = true;
 
 const fetchAllRecords = async () => {
