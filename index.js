@@ -27,7 +27,7 @@ let channel2 = "1576332973";
 
 let chanLink = "https://t.me/+B6ibcl6qtb45YmVi";
 let chanLink1 = "https://t.me/+y62ECfeXAWw3ZDgy";
-let chanLink2 = "https://t.me/+CQRKl4gO8rswNmQ6";
+let chanLink2 = "https://t.me/+8HO8tuiPbgk0OTQy";
 
 const zayavka = "1882547088";
 let minimal = 10;
